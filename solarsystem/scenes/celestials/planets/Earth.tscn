@@ -1,7 +1,34 @@
-[gd_scene load_steps=5 format=3 uid="uid://d1huipfhbrw1t"]
+[gd_scene load_steps=8 format=3 uid="uid://d1huipfhbrw1t"]
 
-[ext_resource type="Script" uid="uid://p8tf4a11aagj" path="res://scripts/earth.gd" id="1_wplp3"]
+[ext_resource type="Script" uid="uid://cbcmjcw2vxvlo" path="res://scripts/earth_spin.gd" id="1_id66m"]
 [ext_resource type="Texture2D" uid="uid://om5duxdwsnto" path="res://textures/earth albedo.jpg" id="2_r21a4"]
+
+[sub_resource type="GDScript" id="GDScript_id66m"]
+script/source = "extends Node3D
+
+@export var seconds_per_orbit := 27.3 * 1.0                # multipliziert mit Earth spin
+@export var radius := 60.27                                # echter Abstand in Erdradien
+@export var distance_scale := 0.08                         # Kompressionsfaktor (hier ~1/12.5)
+@export var inclination_deg := 5.1
+@export var tidal_lock := false
+
+@onready var offset: Node3D = $Offset
+@onready var moon: Node3D = $Offset/Moon
+
+func _ready():
+	rotation_degrees.x = inclination_deg
+	offset.position = Vector3(radius * distance_scale, 0, 0)
+
+func _process(delta):
+	rotation_degrees.y = fposmod(rotation_degrees.y + 360.0 * delta / seconds_per_orbit, 360.0)
+	if tidal_lock:
+		moon.look_at(get_parent().global_transform.origin, Vector3.UP)
+"
+
+[sub_resource type="SphereMesh" id="SphereMesh_w4nfn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6drko"]
+albedo_color = Color(0.324219, 0.324219, 0.324219, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_dscwl"]
 
@@ -9,8 +36,23 @@
 albedo_texture = ExtResource("2_r21a4")
 
 [node name="Earth" type="Node3D"]
-script = ExtResource("1_wplp3")
 
-[node name="Mesh" type="MeshInstance3D" parent="."]
+[node name="MoonOrbit" type="Node3D" parent="."]
+script = SubResource("GDScript_id66m")
+
+[node name="Offset" type="Node3D" parent="MoonOrbit"]
+
+[node name="Moon" type="Node3D" parent="MoonOrbit/Offset"]
+
+[node name="Mesh" type="MeshInstance3D" parent="MoonOrbit/Offset/Moon"]
+transform = Transform3D(0.273, 0, 0, 0, 0.273, 0, 0, 0, 0.273, 0, 0, 0)
+mesh = SubResource("SphereMesh_w4nfn")
+surface_material_override/0 = SubResource("StandardMaterial3D_6drko")
+
+[node name="EarthSpin" type="Node3D" parent="."]
+script = ExtResource("1_id66m")
+
+[node name="Mesh" type="MeshInstance3D" parent="EarthSpin"]
 mesh = SubResource("SphereMesh_dscwl")
+skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_0spun")
