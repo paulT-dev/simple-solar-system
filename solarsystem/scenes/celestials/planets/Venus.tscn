@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://vc3aojivmcj1"]
+
+[ext_resource type="Script" uid="uid://bglhhjiimjw60" path="res://scripts/venus.gd" id="1_ja6hq"]
+[ext_resource type="PackedScene" uid="uid://c1b7j7q74jjhr" path="res://textures/Venus_1_12103.glb" id="2_txeos"]
+
+[node name="Venus" type="Node3D"]
+script = ExtResource("1_ja6hq")
+
+[node name="Venus_1_12103" parent="." instance=ExtResource("2_txeos")]
+transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0, 0, 0)
