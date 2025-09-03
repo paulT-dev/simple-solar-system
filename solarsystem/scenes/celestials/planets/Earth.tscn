@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dirmaeu0dlesi"]
+
+[ext_resource type="PackedScene" uid="uid://cxtb7i85mj43v" path="res://scenes/celestials/planets/Planet.tscn" id="1_podto"]
+[ext_resource type="Texture2D" uid="uid://om5duxdwsnto" path="res://textures/earth albedo.jpg" id="2_id66m"]
+
+[node name="Planet" instance=ExtResource("1_podto")]
+display_name = "Earth"
+radius_units = 1.0
+albedo_tex = ExtResource("2_id66m")
