@@ -1,7 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://d1huipfhbrw1t"]
 
+[ext_resource type="Script" uid="uid://b23l7gxkuyfye" path="res://scripts/earth_orbit.gd" id="1_6drko"]
 [ext_resource type="Script" uid="uid://cbcmjcw2vxvlo" path="res://scripts/earth_spin.gd" id="1_id66m"]
-[ext_resource type="Texture2D" uid="uid://om5duxdwsnto" path="res://textures/earth albedo.jpg" id="2_r21a4"]
+[ext_resource type="Texture2D" uid="uid://bjc2yxhjm2ata" path="res://textures/MoonMap2_2500x1250.jpg" id="2_i7iuk"]
+[ext_resource type="PackedScene" uid="uid://denbos2tafe5v" path="res://textures/EarthClouds_1_12756.glb" id="4_1kkal"]
 
 [sub_resource type="GDScript" id="GDScript_id66m"]
 script/source = "extends Node3D
@@ -28,14 +30,11 @@ func _process(delta):
 [sub_resource type="SphereMesh" id="SphereMesh_w4nfn"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6drko"]
-albedo_color = Color(0.324219, 0.324219, 0.324219, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_dscwl"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0spun"]
-albedo_texture = ExtResource("2_r21a4")
+albedo_color = Color(0.886719, 0.886719, 0.886719, 1)
+albedo_texture = ExtResource("2_i7iuk")
 
 [node name="Earth" type="Node3D"]
+script = ExtResource("1_6drko")
 
 [node name="MoonOrbit" type="Node3D" parent="."]
 script = SubResource("GDScript_id66m")
@@ -45,14 +44,12 @@ script = SubResource("GDScript_id66m")
 [node name="Moon" type="Node3D" parent="MoonOrbit/Offset"]
 
 [node name="Mesh" type="MeshInstance3D" parent="MoonOrbit/Offset/Moon"]
-transform = Transform3D(0.273, 0, 0, 0, 0.273, 0, 0, 0, 0.273, 0, 0, 0)
+transform = Transform3D(0.273, 0, 0, 0, 0.273, 0, 0, 0, 0.273, 2, 0, 0)
 mesh = SubResource("SphereMesh_w4nfn")
 surface_material_override/0 = SubResource("StandardMaterial3D_6drko")
 
 [node name="EarthSpin" type="Node3D" parent="."]
 script = ExtResource("1_id66m")
 
-[node name="Mesh" type="MeshInstance3D" parent="EarthSpin"]
-mesh = SubResource("SphereMesh_dscwl")
-skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_0spun")
+[node name="Mesh" parent="EarthSpin" instance=ExtResource("4_1kkal")]
+transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0, 0, 0)
