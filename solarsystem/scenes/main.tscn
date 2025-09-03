@@ -1,4 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cmda6cqly7evw"]
+[gd_scene load_steps=4 format=3 uid="uid://cmda6cqly7evw"]
+
+[ext_resource type="PackedScene" uid="uid://d32df7pdlwjy0" path="res://scenes/celestials/sun.tscn" id="1_o5qli"]
+[ext_resource type="PackedScene" uid="uid://dq0j13sw6j6vu" path="res://scenes/celestials/planets/Mercury.tscn" id="2_0wfyh"]
 
 [sub_resource type="Environment" id="Environment_sgp6g"]
 
@@ -6,10 +9,19 @@
 
 [node name="CameraRig" type="Node3D" parent="."]
 
-[node name="Camera3D" type="Camera3D" parent="CameraRig"]
-transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 2, 12)
+[node name="Top" type="Camera3D" parent="CameraRig"]
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, 0, 25, 0)
+
+[node name="Frontal" type="Camera3D" parent="CameraRig"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 12)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_sgp6g")
 
 [node name="Celestials" type="Node3D" parent="."]
+
+[node name="Sun" parent="Celestials" instance=ExtResource("1_o5qli")]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+
+[node name="Mercury" parent="Celestials" instance=ExtResource("2_0wfyh")]
+transform = Transform3D(0.193, 0, 0, 0, 0.193, 0, 0, 0, 0.193, 0, 0, 11.6)

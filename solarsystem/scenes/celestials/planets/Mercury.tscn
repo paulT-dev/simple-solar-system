@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dq0j13sw6j6vu"]
+
+[ext_resource type="Script" uid="uid://bkrlv5jov5w2x" path="res://scripts/mercury_spin.gd" id="1_6h215"]
+[ext_resource type="PackedScene" uid="uid://dopnbdbq3inv1" path="res://textures/Mercury_1_4878.glb" id="2_jh3u4"]
+
+[node name="Mercury" type="Node3D"]
+script = ExtResource("1_6h215")
+
+[node name="Mesh" parent="." instance=ExtResource("2_jh3u4")]
+transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0, 0, 0)
