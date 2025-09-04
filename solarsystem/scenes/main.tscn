@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cmda6cqly7evw"]
+[gd_scene load_steps=18 format=3 uid="uid://cmda6cqly7evw"]
 
 [ext_resource type="Script" uid="uid://c4ri5ni20rfnf" path="res://scripts/FreeFlyCamera.gd" id="1_choun"]
 [ext_resource type="Script" uid="uid://civms7lwxxyct" path="res://scripts/camera_switcher.gd" id="1_eb6dy"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://da8rrje65lpac" path="res://scenes/celestials/planets/Uranus.tscn" id="8_85g3d"]
 [ext_resource type="Script" uid="uid://msdhu4v3128h" path="res://scripts/Earth/Earth_orbit.gd" id="8_a8y0u"]
 [ext_resource type="Script" uid="uid://bdas78x2x21v5" path="res://scripts/Mars/Mars_orbit.gd" id="10_jkv2x"]
+[ext_resource type="Script" uid="uid://dpvnkhe5x54n6" path="res://scripts/Jupiter/Jupiter_orbit.gd" id="12_jbj1t"]
 
 [sub_resource type="Environment" id="Environment_sgp6g"]
 
@@ -34,7 +35,7 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 [node name="Celestials" type="Node3D" parent="."]
 
 [node name="Sun" parent="Celestials" instance=ExtResource("1_o5qli")]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+transform = Transform3D(13, 0, 0, 0, 13, 0, 0, 0, 13, 0, 0, 0)
 
 [node name="Mercury_Orbit" type="Node3D" parent="Celestials"]
 script = ExtResource("3_ya4ey")
@@ -59,8 +60,12 @@ script = ExtResource("10_jkv2x")
 [node name="Mars" parent="Celestials/Mars_Orbit" instance=ExtResource("5_tbgi4")]
 transform = Transform3D(0.533, 0, 0, 0, 0.533, 0, 0, 0, 0.533, 0, 0, 0)
 
-[node name="Jupiter" parent="Celestials" instance=ExtResource("6_o6xl0")]
-transform = Transform3D(56, 0, 0, 0, 56, 0, 0, 0, 56, 0, 0, 156)
+[node name="Jupiter_Orbit" type="Node3D" parent="Celestials"]
+script = ExtResource("12_jbj1t")
+seconds_per_day = 0.01
+
+[node name="Jupiter" parent="Celestials/Jupiter_Orbit" instance=ExtResource("6_o6xl0")]
+transform = Transform3D(11.2, 0, 0, 0, 11.2, 0, 0, 0, 11.2, 0, 0, 0)
 
 [node name="Saturn" parent="Celestials" instance=ExtResource("7_tipki")]
 transform = Transform3D(47, 0, 0, 0, 47, 0, 0, 0, 47, 0, 0, 287)
