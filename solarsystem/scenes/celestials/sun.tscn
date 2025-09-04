@@ -1,20 +1,20 @@
 [gd_scene load_steps=3 format=3 uid="uid://d32df7pdlwjy0"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_k0ck4"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6ecod"]
-albedo_color = Color(0.937255, 0.580392, 0.133333, 1)
-emission_enabled = true
-emission = Color(0.901961, 1, 0.556863, 1)
-emission_energy_multiplier = 7.0
+[ext_resource type="PackedScene" uid="uid://b3xmteoedq07e" path="res://textures/Sun_1_1391000.glb" id="1_6ecod"]
+[ext_resource type="Script" uid="uid://bsh7wg2odqxac" path="res://scripts/sun_spin.gd" id="1_mgkrq"]
 
 [node name="Sun" type="Node3D"]
+script = ExtResource("1_mgkrq")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("SphereMesh_k0ck4")
-surface_material_override/0 = SubResource("StandardMaterial3D_6ecod")
+[node name="Mesh" parent="." instance=ExtResource("1_6ecod")]
+transform = Transform3D(0.335, 0, 0, 0, 0.335, 0, 0, 0, 0.335, 0, 0, 0)
 
-[node name="OmniLight3D" type="OmniLight3D" parent="MeshInstance3D"]
+[node name="OmniLight3D" type="OmniLight3D" parent="Mesh"]
+light_energy = 16.0
+omni_range = 1000.0
+omni_shadow_mode = 0
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
 light_energy = 16.0
 shadow_enabled = true
 omni_range = 1000.0
