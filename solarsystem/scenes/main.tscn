@@ -21,6 +21,7 @@ script = ExtResource("1_choun")
 [node name="Pivot" type="Node3D" parent="CameraRig"]
 
 [node name="Camera3D" type="Camera3D" parent="CameraRig/Pivot"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -100)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_sgp6g")

@@ -1,4 +1,4 @@
-# FreeFlyCamera.gd  (Tabs zur Einrückung)
+# FreeFlyCamera.gd (mit Zoom)
 extends Node3D
 
 @export var move_speed: float = 30.0
@@ -9,6 +9,12 @@ extends Node3D
 @export var slow_mult: float = 0.25
 @export var invert_y: bool = false
 @export var pitch_limit_deg: float = 89.0
+
+# Zoom-Parameter
+@export var fov_min: float = 20.0
+@export var fov_max: float = 90.0
+@export var fov_step: float = 2.0		# pro Mausrad-Klick bei Ctrl
+@export var dolly_step: float = 5.0		# Units pro Mausrad-Klick bei Alt
 
 var yaw := 0.0
 var pitch := 0.0
@@ -32,9 +38,23 @@ func _input(event: InputEvent) -> void:
 			captured = !captured
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED if captured else Input.MOUSE_MODE_VISIBLE)
 		elif event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
-			move_speed = clamp(move_speed * 1.1, min_speed, max_speed)
+			# Ctrl + Wheel: FOV-Zoom (optisch)
+			if event.ctrl_pressed and cam:
+				cam.fov = clamp(cam.fov - fov_step, fov_min, fov_max)
+			# Alt + Wheel: Dolly (vor/zurück entlang Blickrichtung)
+			elif event.alt_pressed:
+				translate(-transform.basis.z * dolly_step)
+			# sonst: Bewegungsgeschwindigkeit anpassen
+			else:
+				move_speed = clamp(move_speed * 1.1, min_speed, max_speed)
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
-			move_speed = clamp(move_speed / 1.1, min_speed, max_speed)
+			if event.ctrl_pressed and cam:
+				cam.fov = clamp(cam.fov + fov_step, fov_min, fov_max)
+			elif event.alt_pressed:
+				translate(transform.basis.z * dolly_step)
+			else:
+				move_speed = clamp(move_speed / 1.1, min_speed, max_speed)
+
 	elif event is InputEventMouseMotion and captured:
 		yaw -= event.relative.x * mouse_sense
 		var dy = event.relative.y * mouse_sense * ( -1.0 if invert_y else 1.0 )
