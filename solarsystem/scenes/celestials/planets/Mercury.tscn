@@ -1,12 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dq0j13sw6j6vu"]
+[gd_scene load_steps=4 format=3 uid="uid://dq0j13sw6j6vu"]
 
-[ext_resource type="Script" uid="uid://cxeu6qf6j08pp" path="res://scripts/Mercury/mercury_orbit.gd" id="1_lcavg"]
 [ext_resource type="Script" uid="uid://cmfyelhqiu8gl" path="res://scripts/Mercury/mercury_spin.gd" id="2_17ey1"]
 [ext_resource type="PackedScene" uid="uid://dopnbdbq3inv1" path="res://textures/Mercury_1_4878.glb" id="2_jh3u4"]
 [ext_resource type="Script" uid="uid://ccti6m3phgnst" path="res://scripts/Mercury/mercury_orbit_trail.gd" id="3_17ey1"]
 
 [node name="Mercury" type="Node3D"]
-script = ExtResource("1_lcavg")
 
 [node name="OrbitTrail" type="Node3D" parent="."]
 script = ExtResource("3_17ey1")

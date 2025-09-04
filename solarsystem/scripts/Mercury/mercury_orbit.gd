@@ -8,7 +8,7 @@ extends Node3D
 @export var Omega_deg: float = 48.331		# Länge aufst. Knoten (°)
 @export var omega_deg: float = 29.124		# Argument des Perihels (°)
 
-@export var days_per_orbit: float = 5.969	# siderische Umlaufzeit (Tage)
+@export var days_per_orbit: float = 87.969	# siderische Umlaufzeit (Tage)
 @export var seconds_per_day: float = 1.0	# 1 s = 1 Tag
 @export var mean_anomaly_deg_at_t0: float = 0.0	# Startphase M0 (°)
 
