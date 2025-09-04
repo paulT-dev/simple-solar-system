@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cmda6cqly7evw"]
+[gd_scene load_steps=16 format=3 uid="uid://cmda6cqly7evw"]
 
 [ext_resource type="Script" uid="uid://c4ri5ni20rfnf" path="res://scripts/FreeFlyCamera.gd" id="1_choun"]
 [ext_resource type="Script" uid="uid://civms7lwxxyct" path="res://scripts/camera_switcher.gd" id="1_eb6dy"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://f3je1wha30q3" path="res://scripts/Venus/Venus_orbit.gd" id="6_trceg"]
 [ext_resource type="PackedScene" uid="uid://bxjht2au2656f" path="res://scenes/celestials/planets/Saturn.tscn" id="7_tipki"]
 [ext_resource type="PackedScene" uid="uid://da8rrje65lpac" path="res://scenes/celestials/planets/Uranus.tscn" id="8_85g3d"]
+[ext_resource type="Script" uid="uid://msdhu4v3128h" path="res://scripts/Earth/Earth_orbit.gd" id="8_a8y0u"]
 
 [sub_resource type="Environment" id="Environment_sgp6g"]
 
@@ -44,8 +45,10 @@ script = ExtResource("6_trceg")
 
 [node name="Venus" parent="Celestials/Venus_Orbit" instance=ExtResource("3_sugp2")]
 
-[node name="Earth" parent="Celestials" instance=ExtResource("4_jyhfs")]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 30)
+[node name="Earth_Orbit" type="Node3D" parent="Celestials"]
+script = ExtResource("8_a8y0u")
+
+[node name="Earth" parent="Celestials/Earth_Orbit" instance=ExtResource("4_jyhfs")]
 
 [node name="Mars" parent="Celestials" instance=ExtResource("5_tbgi4")]
 transform = Transform3D(2.6, 0, 0, 0, 2.6, 0, 0, 0, 2.6, 0, 0, 45.6)

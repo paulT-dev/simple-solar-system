@@ -1,31 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://d1huipfhbrw1t"]
+[gd_scene load_steps=10 format=3 uid="uid://d1huipfhbrw1t"]
 
-[ext_resource type="Script" uid="uid://b23l7gxkuyfye" path="res://scripts/earth_orbit.gd" id="1_6drko"]
-[ext_resource type="Script" uid="uid://cbcmjcw2vxvlo" path="res://scripts/earth_spin.gd" id="1_id66m"]
+[ext_resource type="Script" uid="uid://brqwjo2kwqfqj" path="res://scripts/Earth/earth_spin.gd" id="2_1kkal"]
 [ext_resource type="Texture2D" uid="uid://bjc2yxhjm2ata" path="res://textures/MoonMap2_2500x1250.jpg" id="2_i7iuk"]
+[ext_resource type="Script" uid="uid://c4ri5ni20rfnf" path="res://scripts/FreeFlyCamera.gd" id="3_1kkal"]
 [ext_resource type="PackedScene" uid="uid://denbos2tafe5v" path="res://textures/EarthClouds_1_12756.glb" id="4_1kkal"]
-
-[sub_resource type="GDScript" id="GDScript_id66m"]
-script/source = "extends Node3D
-
-@export var seconds_per_orbit := 27.3 * 1.0                # multipliziert mit Earth spin
-@export var radius := 60.27                                # echter Abstand in Erdradien
-@export var distance_scale := 0.08                         # Kompressionsfaktor (hier ~1/12.5)
-@export var inclination_deg := 5.1
-@export var tidal_lock := false
-
-@onready var offset: Node3D = $Offset
-@onready var moon: Node3D = $Offset/Moon
-
-func _ready():
-	rotation_degrees.x = inclination_deg
-	offset.position = Vector3(radius * distance_scale, 0, 0)
-
-func _process(delta):
-	rotation_degrees.y = fposmod(rotation_degrees.y + 360.0 * delta / seconds_per_orbit, 360.0)
-	if tidal_lock:
-		moon.look_at(get_parent().global_transform.origin, Vector3.UP)
-"
+[ext_resource type="Script" uid="uid://caxcqshwhrl28" path="res://scripts/Earth/Moon_orbit.gd" id="4_3pnbj"]
+[ext_resource type="Script" uid="uid://bfvry08o63n3i" path="res://scripts/Earth/orbit_trail_earth.gd" id="4_oeb1d"]
+[ext_resource type="Script" uid="uid://bdho2ow8rkks2" path="res://scripts/Earth/moon_spin.gd" id="5_nhu2r"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_w4nfn"]
 
@@ -34,22 +15,33 @@ albedo_color = Color(0.886719, 0.886719, 0.886719, 1)
 albedo_texture = ExtResource("2_i7iuk")
 
 [node name="Earth" type="Node3D"]
-script = ExtResource("1_6drko")
+
+[node name="OrbitTrail_Earth" type="Node3D" parent="."]
+script = ExtResource("4_oeb1d")
+
+[node name="EarthSpin" type="Node3D" parent="OrbitTrail_Earth"]
+script = ExtResource("2_1kkal")
+
+[node name="Mesh" parent="OrbitTrail_Earth/EarthSpin" instance=ExtResource("4_1kkal")]
+transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0, 0, 0)
 
 [node name="MoonOrbit" type="Node3D" parent="."]
-script = SubResource("GDScript_id66m")
+script = ExtResource("4_3pnbj")
 
-[node name="Offset" type="Node3D" parent="MoonOrbit"]
+[node name="MoonSpin" type="Node3D" parent="MoonOrbit"]
+script = ExtResource("5_nhu2r")
 
-[node name="Moon" type="Node3D" parent="MoonOrbit/Offset"]
-
-[node name="Mesh" type="MeshInstance3D" parent="MoonOrbit/Offset/Moon"]
+[node name="Mesh" type="MeshInstance3D" parent="MoonOrbit/MoonSpin"]
 transform = Transform3D(0.273, 0, 0, 0, 0.273, 0, 0, 0, 0.273, 2, 0, 0)
 mesh = SubResource("SphereMesh_w4nfn")
 surface_material_override/0 = SubResource("StandardMaterial3D_6drko")
 
-[node name="EarthSpin" type="Node3D" parent="."]
-script = ExtResource("1_id66m")
+[node name="CameraRig" type="Node3D" parent="."]
+script = ExtResource("3_1kkal")
 
-[node name="Mesh" parent="EarthSpin" instance=ExtResource("4_1kkal")]
-transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0, 0, 0)
+[node name="Pivot" type="Node3D" parent="CameraRig"]
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig/Pivot" groups=["cams"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
