@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://da8rrje65lpac"]
+
+[ext_resource type="Script" uid="uid://clf78eny8fa1m" path="res://scripts/uranus_orbit.gd" id="1_wfhft"]
+[ext_resource type="Script" uid="uid://wi754jjdiei6" path="res://scripts/uranus_spin.gd" id="2_s4exa"]
+[ext_resource type="PackedScene" uid="uid://4ac0387nysgy" path="res://textures/Uranus_1_51118.glb" id="3_ew8jt"]
+
+[node name="Uranus" type="Node3D"]
+script = ExtResource("1_wfhft")
+
+[node name="Rotation" type="Node3D" parent="."]
+script = ExtResource("2_s4exa")
+
+[node name="Mesh" parent="Rotation" instance=ExtResource("3_ew8jt")]
+transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0, 0, 0)
