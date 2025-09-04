@@ -55,7 +55,6 @@ script = ExtResource("8_a8y0u")
 script = ExtResource("10_jkv2x")
 
 [node name="Mars" parent="Celestials/Mars_Orbit" instance=ExtResource("5_tbgi4")]
-transform = Transform3D(2.6, 0, 0, 0, 2.6, 0, 0, 0, 2.6, 0, 0, 45.6)
 
 [node name="Jupiter" parent="Celestials" instance=ExtResource("6_o6xl0")]
 transform = Transform3D(56, 0, 0, 0, 56, 0, 0, 0, 56, 0, 0, 156)
