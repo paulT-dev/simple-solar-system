@@ -7,6 +7,14 @@
 
 [node name="Mercury" type="Node3D"]
 
+[node name="CameraRig" type="Node3D" parent="."]
+script = ExtResource("4_17ey1")
+
+[node name="Pivot" type="Node3D" parent="CameraRig"]
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig/Pivot" groups=["cams"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+
 [node name="OrbitTrail" type="Node3D" parent="."]
 script = ExtResource("3_17ey1")
 
@@ -16,12 +24,5 @@ script = ExtResource("2_17ey1")
 [node name="Mesh" parent="OrbitTrail/Rotation" instance=ExtResource("2_jh3u4")]
 transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0, 0, 0)
 
-[node name="CameraRig" type="Node3D" parent="."]
-script = ExtResource("4_17ey1")
-
-[node name="Pivot" type="Node3D" parent="CameraRig"]
-
-[node name="Camera3D" type="Camera3D" parent="CameraRig/Pivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+visible = false

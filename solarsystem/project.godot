@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="SolarSystem"
-run/main_scene="uid://dq0j13sw6j6vu"
+run/main_scene="uid://cmda6cqly7evw"
 config/features=PackedStringArray("4.4", "Forward Plus")
 
 [filesystem]
 
 import/blender/enabled=false
+
+[global_group]
+
+cams=""
