@@ -1,0 +1,38 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://b2wx7swj7u3o"
+path.s3tc="res://.godot/imported/24881_Mars_1_6792_mars_diff.png-46e8b85a327e00a5ba7a7c6100ea2028.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "e29ac2744a76f79f31dd930d4f01958b"
+}
+
+[deps]
+
+source_file="res://textures/24881_Mars_1_6792_mars_diff.png"
+dest_files=["res://.godot/imported/24881_Mars_1_6792_mars_diff.png-46e8b85a327e00a5ba7a7c6100ea2028.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

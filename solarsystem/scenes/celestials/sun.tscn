@@ -17,4 +17,4 @@ surface_material_override/0 = SubResource("StandardMaterial3D_6ecod")
 [node name="OmniLight3D" type="OmniLight3D" parent="MeshInstance3D"]
 light_energy = 8.0
 shadow_enabled = true
-omni_range = 250.0
+omni_range = 1000.0

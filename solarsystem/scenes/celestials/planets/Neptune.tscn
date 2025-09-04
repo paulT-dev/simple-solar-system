@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://cfel5bshyvn16"]
+
+[ext_resource type="PackedScene" uid="uid://b5qdsglb7p6i6" path="res://textures/Neptune_1_49528.glb" id="1_0g38i"]
+[ext_resource type="Script" uid="uid://dd7hf4ktm8d6w" path="res://scripts/neptune_orbit.gd" id="1_rcj8c"]
+[ext_resource type="Script" uid="uid://bqagpxf6rce8q" path="res://scripts/neptune_spin.gd" id="2_3fedn"]
+
+[node name="Neptune" type="Node3D"]
+script = ExtResource("1_rcj8c")
+
+[node name="Rotation" type="Node3D" parent="."]
+script = ExtResource("2_3fedn")
+
+[node name="Mesh" parent="Rotation" instance=ExtResource("1_0g38i")]
+transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0, 0, 0)
