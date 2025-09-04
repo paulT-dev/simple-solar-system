@@ -1,14 +1,28 @@
-[gd_scene load_steps=4 format=3 uid="uid://7ovl70ulw3vx"]
+[gd_scene load_steps=5 format=3 uid="uid://7ovl70ulw3vx"]
 
-[ext_resource type="Script" uid="uid://80flou547wkq" path="res://scripts/mars.gd" id="1_kxvt8"]
+[ext_resource type="Script" uid="uid://dbb6epqpvidkc" path="res://scripts/Mars/mars_orbit_trail.gd" id="1_mgsrv"]
 [ext_resource type="Script" uid="uid://blbg2aerij83t" path="res://scripts/mars_spin.gd" id="2_mgsrv"]
 [ext_resource type="PackedScene" uid="uid://bg3vcawyjtbl2" path="res://textures/24881_Mars_1_6792.glb" id="2_xgwo8"]
+[ext_resource type="Script" uid="uid://c4ri5ni20rfnf" path="res://scripts/FreeFlyCamera.gd" id="4_h7c8j"]
 
 [node name="Mars" type="Node3D"]
-script = ExtResource("1_kxvt8")
 
-[node name="Rotation" type="Node3D" parent="."]
+[node name="OrbitTrail" type="Node3D" parent="."]
+script = ExtResource("1_mgsrv")
+
+[node name="Rotation" type="Node3D" parent="OrbitTrail"]
 script = ExtResource("2_mgsrv")
 
-[node name="Mesh" parent="Rotation" instance=ExtResource("2_xgwo8")]
+[node name="Mesh" parent="OrbitTrail/Rotation" instance=ExtResource("2_xgwo8")]
 transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0, 0, 0)
+
+[node name="CameraRig" type="Node3D" parent="."]
+script = ExtResource("4_h7c8j")
+
+[node name="Pivot" type="Node3D" parent="CameraRig"]
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig/Pivot" groups=["cams"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+visible = false
