@@ -40,11 +40,13 @@ transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 script = ExtResource("3_ya4ey")
 
 [node name="Mercury" parent="Celestials/Mercury_Orbit" instance=ExtResource("2_0wfyh")]
+transform = Transform3D(0.383, 0, 0, 0, 0.383, 0, 0, 0, 0.383, 0, 0, 0)
 
 [node name="Venus_Orbit" type="Node3D" parent="Celestials"]
 script = ExtResource("6_trceg")
 
 [node name="Venus" parent="Celestials/Venus_Orbit" instance=ExtResource("3_sugp2")]
+transform = Transform3D(0.94, 0, 0, 0, 0.94, 0, 0, 0, 0.94, 0, 0, 0)
 
 [node name="Earth_Orbit" type="Node3D" parent="Celestials"]
 script = ExtResource("8_a8y0u")
@@ -55,6 +57,7 @@ script = ExtResource("8_a8y0u")
 script = ExtResource("10_jkv2x")
 
 [node name="Mars" parent="Celestials/Mars_Orbit" instance=ExtResource("5_tbgi4")]
+transform = Transform3D(0.533, 0, 0, 0, 0.533, 0, 0, 0, 0.533, 0, 0, 0)
 
 [node name="Jupiter" parent="Celestials" instance=ExtResource("6_o6xl0")]
 transform = Transform3D(56, 0, 0, 0, 56, 0, 0, 0, 56, 0, 0, 156)
