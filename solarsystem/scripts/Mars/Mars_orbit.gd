@@ -15,7 +15,7 @@ extends Node3D
 var t_days := 0.0
 
 func _process(delta: float) -> void:
-	t_days += delta * seconds_per_day
+	t_days += delta / seconds_per_day
 
 	# Mittlere Anomalie M
 	var M := TAU * (t_days / days_per_orbit) + deg_to_rad(mean_anomaly_deg_at_t0)
