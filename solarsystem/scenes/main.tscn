@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cmda6cqly7evw"]
+[gd_scene load_steps=10 format=3 uid="uid://cmda6cqly7evw"]
 
 [ext_resource type="PackedScene" uid="uid://d32df7pdlwjy0" path="res://scenes/celestials/sun.tscn" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://dq0j13sw6j6vu" path="res://scenes/celestials/planets/Mercury.tscn" id="2_0wfyh"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://7ovl70ulw3vx" path="res://scenes/celestials/planets/Mars.tscn" id="5_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://dby6gyivdw0j7" path="res://scenes/celestials/planets/Jupiter.tscn" id="6_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://cfel5bshyvn16" path="res://scenes/celestials/planets/Neptune.tscn" id="6_tefeu"]
+[ext_resource type="PackedScene" uid="uid://bxjht2au2656f" path="res://scenes/celestials/planets/Saturn.tscn" id="7_tipki"]
 
 [sub_resource type="Environment" id="Environment_sgp6g"]
 
@@ -18,7 +19,7 @@
 transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, 0, 1000, 0)
 
 [node name="Frontal" type="Camera3D" parent="CameraRig"]
-transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 1000)
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 400)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_sgp6g")
@@ -42,6 +43,9 @@ transform = Transform3D(2.6, 0, 0, 0, 2.6, 0, 0, 0, 2.6, 0, 0, 45.6)
 
 [node name="Jupiter" parent="Celestials" instance=ExtResource("6_o6xl0")]
 transform = Transform3D(56, 0, 0, 0, 56, 0, 0, 0, 56, 0, 0, 156)
+
+[node name="Saturn" parent="Celestials" instance=ExtResource("7_tipki")]
+transform = Transform3D(47, 0, 0, 0, 47, 0, 0, 0, 47, 0, 0, 287)
 
 [node name="Neptune" parent="Celestials" instance=ExtResource("6_tefeu")]
 transform = Transform3D(19.4, 0, 0, 0, 19.4, 0, 0, 0, 19.4, 0, 0, 900)

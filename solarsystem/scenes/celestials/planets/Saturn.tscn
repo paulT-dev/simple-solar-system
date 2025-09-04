@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://bxjht2au2656f"]
+
+[ext_resource type="PackedScene" uid="uid://b2ou4llr483sf" path="res://textures/Saturn_1_120536.glb" id="1_0hv4o"]
+[ext_resource type="Script" uid="uid://5jt11mx4f0pt" path="res://scripts/saturn_orbit.gd" id="1_atjfo"]
+[ext_resource type="Script" uid="uid://fe24d6ewxbi7" path="res://scripts/saturn_spin.gd" id="2_o4pxn"]
+
+[node name="Saturn" type="Node3D"]
+script = ExtResource("1_atjfo")
+
+[node name="Rotation" type="Node3D" parent="."]
+script = ExtResource("2_o4pxn")
+
+[node name="Saturn_1_120536" parent="Rotation" instance=ExtResource("1_0hv4o")]
+transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0, 0, 0)
