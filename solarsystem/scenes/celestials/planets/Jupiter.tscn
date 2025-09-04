@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://dby6gyivdw0j7"]
+
+[ext_resource type="Script" uid="uid://crx765gfw470a" path="res://scripts/jupiter_orbit.gd" id="1_weauq"]
+[ext_resource type="Script" uid="uid://cb1hcy3w6delx" path="res://scripts/jupiter_spin.gd" id="2_wkbcp"]
+[ext_resource type="PackedScene" uid="uid://3sxsx7d8h008" path="res://textures/Jupiter_1_142984.glb" id="3_fhdq0"]
+
+[node name="Jupiter" type="Node3D"]
+script = ExtResource("1_weauq")
+
+[node name="Rotation" type="Node3D" parent="."]
+script = ExtResource("2_wkbcp")
+
+[node name="Mesh" parent="Rotation" instance=ExtResource("3_fhdq0")]
+transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0, 0, 0)
