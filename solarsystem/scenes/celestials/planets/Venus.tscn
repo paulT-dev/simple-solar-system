@@ -1,10 +1,28 @@
-[gd_scene load_steps=3 format=3 uid="uid://vc3aojivmcj1"]
+[gd_scene load_steps=5 format=3 uid="uid://vc3aojivmcj1"]
 
-[ext_resource type="Script" uid="uid://bglhhjiimjw60" path="res://scripts/venus.gd" id="1_ja6hq"]
+[ext_resource type="Script" uid="uid://c4ri5ni20rfnf" path="res://scripts/FreeFlyCamera.gd" id="2_j7vnp"]
 [ext_resource type="PackedScene" uid="uid://c1b7j7q74jjhr" path="res://textures/Venus_1_12103.glb" id="2_txeos"]
+[ext_resource type="Script" uid="uid://ckohg30hvxir7" path="res://scripts/Venus/venus_orbit_trail.gd" id="3_136ic"]
+[ext_resource type="Script" uid="uid://cd2er2pu4lcb4" path="res://scripts/Venus/venus_spin.gd" id="3_j7vnp"]
 
 [node name="Venus" type="Node3D"]
-script = ExtResource("1_ja6hq")
 
-[node name="Venus_1_12103" parent="." instance=ExtResource("2_txeos")]
+[node name="CameraRig" type="Node3D" parent="."]
+script = ExtResource("2_j7vnp")
+
+[node name="Pivot" type="Node3D" parent="CameraRig"]
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig/Pivot" groups=["cams"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+
+[node name="OrbitTrail" type="Node3D" parent="."]
+script = ExtResource("3_136ic")
+
+[node name="Rotation" type="Node3D" parent="OrbitTrail"]
+script = ExtResource("3_j7vnp")
+
+[node name="Mesh" parent="OrbitTrail/Rotation" instance=ExtResource("2_txeos")]
 transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0, 0, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+visible = false
