@@ -23,6 +23,7 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ld40"]
 cull_mode = 1
+shading_mode = 0
 albedo_texture = ExtResource("2_dp3eg")
 
 [sub_resource type="Environment" id="Environment_sgp6g"]
