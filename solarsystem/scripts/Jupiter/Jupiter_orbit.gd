@@ -9,13 +9,12 @@ extends Node3D
 @export var omega_deg: float = 273.867
 
 @export var days_per_orbit: float = 4332.59	# ~11.86 Jahre
-@export var seconds_per_day: float = 1.0
 @export var mean_anomaly_deg_at_t0: float = 0.0
 
 var t_days := 0.0
 
 func _process(delta: float) -> void:
-	t_days += delta / seconds_per_day
+	t_days += delta / SimGlobals.seconds_per_day
 
 	# Mittlere Anomalie M
 	var M := TAU * (t_days / days_per_orbit) + deg_to_rad(mean_anomaly_deg_at_t0)
