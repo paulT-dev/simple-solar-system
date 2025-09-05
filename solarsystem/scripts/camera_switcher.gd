@@ -1,4 +1,4 @@
-# CameraSwitcher.gd (Godot 4)
+# CameraSwitcher.gd
 extends Node
 
 @export var group_name: String = "cams"	# alle Camera3D in dieser Gruppe werden gefunden
