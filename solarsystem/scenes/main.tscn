@@ -33,7 +33,7 @@ seconds_per_day = 0.1
 trail_size = 0.5
 
 [node name="Sky" type="MeshInstance3D" parent="."]
-transform = Transform3D(1000, 0, 0, 0, 1000, 0, 0, 0, 1000, 0, 0, 0)
+transform = Transform3D(2000, 0, 0, 0, 2000, 0, 0, 0, 2000, 0, 0, 0)
 mesh = SubResource("SphereMesh_dp3eg")
 surface_material_override/0 = SubResource("StandardMaterial3D_0ld40")
 
@@ -67,6 +67,7 @@ transform = Transform3D(0.533, 0, 0, 0, 0.533, 0, 0, 0, 0.533, 0, 0, 0)
 
 [node name="Jupiter_Orbit" type="Node3D" parent="Celestials"]
 script = ExtResource("12_jbj1t")
+AU_UNITS = 150.0
 
 [node name="Jupiter" parent="Celestials/Jupiter_Orbit" instance=ExtResource("6_o6xl0")]
 transform = Transform3D(11.2, 0, 0, 0, 11.2, 0, 0, 0, 11.2, 0, 0, 0)
