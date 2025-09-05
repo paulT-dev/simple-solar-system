@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://8wjcwtj34nwp"]
+[gd_scene load_steps=13 format=3 uid="uid://dew3q2j6hr0bf"]
 
 [ext_resource type="PackedScene" uid="uid://d32df7pdlwjy0" path="res://scenes/celestials/sun.tscn" id="1_kjrsm"]
+[ext_resource type="Script" uid="uid://dm2uwa5t4dua1" path="res://scripts/inner_solar_system_config.gd" id="1_s5m78"]
 [ext_resource type="Script" uid="uid://civms7lwxxyct" path="res://scripts/camera_switcher.gd" id="2_0nmfu"]
 [ext_resource type="PackedScene" uid="uid://dq0j13sw6j6vu" path="res://scenes/celestials/planets/Mercury.tscn" id="2_1546o"]
 [ext_resource type="PackedScene" uid="uid://vc3aojivmcj1" path="res://scenes/celestials/planets/Venus.tscn" id="3_8u0wk"]
-[ext_resource type="Script" uid="uid://cxeu6qf6j08pp" path="res://scripts/Mercury/Mercury_Orbit.gd" id="4_qk32n"]
+[ext_resource type="Script" uid="uid://cxeu6qf6j08pp" path="res://scripts/Mercury/mercury_orbit.gd" id="4_qk32n"]
 [ext_resource type="PackedScene" uid="uid://d1huipfhbrw1t" path="res://scenes/celestials/planets/Earth.tscn" id="4_ym2ft"]
 [ext_resource type="PackedScene" uid="uid://7ovl70ulw3vx" path="res://scenes/celestials/planets/Mars.tscn" id="5_62eh7"]
 [ext_resource type="Script" uid="uid://c4ri5ni20rfnf" path="res://scripts/FreeFlyCamera.gd" id="6_3f76q"]
@@ -13,9 +14,38 @@
 [ext_resource type="Script" uid="uid://bdas78x2x21v5" path="res://scripts/Mars/Mars_orbit.gd" id="10_s5m78"]
 
 [node name="Inner_SolarSystem" type="Node3D"]
+script = ExtResource("1_s5m78")
+seconds_per_day = 0.1
+trail_size = 0.5
 
 [node name="Sun" parent="." instance=ExtResource("1_kjrsm")]
 transform = Transform3D(17.4, 0, 0, 0, 17.4, 0, 0, 0, 17.4, 0, 0, 0)
+
+[node name="Planets" type="Node3D" parent="."]
+
+[node name="Mercury_Orbit" type="Node3D" parent="Planets"]
+script = ExtResource("4_qk32n")
+
+[node name="Mercury" parent="Planets/Mercury_Orbit" instance=ExtResource("2_1546o")]
+transform = Transform3D(2.43, 0, 0, 0, 2.43, 0, 0, 0, 2.43, 0, 0, 0)
+
+[node name="Venus_Orbit" type="Node3D" parent="Planets"]
+script = ExtResource("6_1546o")
+
+[node name="Venus" parent="Planets/Venus_Orbit" instance=ExtResource("3_8u0wk")]
+transform = Transform3D(6.05, 0, 0, 0, 6.05, 0, 0, 0, 6.05, 0, 0, 0)
+
+[node name="Earth_Orbit" type="Node3D" parent="Planets"]
+script = ExtResource("8_3f76q")
+
+[node name="Earth" parent="Planets/Earth_Orbit" instance=ExtResource("4_ym2ft")]
+transform = Transform3D(6.38, 0, 0, 0, 6.38, 0, 0, 0, 6.38, 0, 0, 0)
+
+[node name="Mars_Orbit" type="Node3D" parent="Planets"]
+script = ExtResource("10_s5m78")
+
+[node name="Mars" parent="Planets/Mars_Orbit" instance=ExtResource("5_62eh7")]
+transform = Transform3D(3.397, 0, 0, 0, 3.397, 0, 0, 0, 3.397, 0, 0, 0)
 
 [node name="CameraSwitcher" type="Node3D" parent="."]
 script = ExtResource("2_0nmfu")
@@ -27,33 +57,3 @@ script = ExtResource("6_3f76q")
 
 [node name="Camera3D" type="Camera3D" parent="CameraSwitcher/CameraRig/Pivot" groups=["cams"]]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 300, 0)
-
-[node name="Planets" type="Node3D" parent="."]
-
-[node name="Mercury_Orbit" type="Node3D" parent="Planets"]
-script = ExtResource("4_qk32n")
-seconds_per_day = 0.1
-
-[node name="Mercury" parent="Planets/Mercury_Orbit" instance=ExtResource("2_1546o")]
-transform = Transform3D(2.43, 0, 0, 0, 2.43, 0, 0, 0, 2.43, 0, 0, 0)
-
-[node name="Venus_Orbit" type="Node3D" parent="Planets"]
-script = ExtResource("6_1546o")
-seconds_per_day = 0.1
-
-[node name="Venus" parent="Planets/Venus_Orbit" instance=ExtResource("3_8u0wk")]
-transform = Transform3D(6.05, 0, 0, 0, 6.05, 0, 0, 0, 6.05, 0, 0, 0)
-
-[node name="Earth_Orbit" type="Node3D" parent="Planets"]
-script = ExtResource("8_3f76q")
-seconds_per_day = 0.1
-
-[node name="Earth" parent="Planets/Earth_Orbit" instance=ExtResource("4_ym2ft")]
-transform = Transform3D(6.38, 0, 0, 0, 6.38, 0, 0, 0, 6.38, 0, 0, 0)
-
-[node name="Mars_Orbit" type="Node3D" parent="Planets"]
-script = ExtResource("10_s5m78")
-seconds_per_day = 0.1
-
-[node name="Mars" parent="Planets/Mars_Orbit" instance=ExtResource("5_62eh7")]
-transform = Transform3D(3.397, 0, 0, 0, 3.397, 0, 0, 0, 3.397, 0, 0, 0)
