@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dby6gyivdw0j7"]
+[gd_scene load_steps=11 format=3 uid="uid://dby6gyivdw0j7"]
 
 [ext_resource type="Script" uid="uid://7rskyw7s2trd" path="res://scripts/Jupiter/orbit_trail_jupiter.gd" id="1_weauq"]
 [ext_resource type="Script" uid="uid://b5200mvqyyjni" path="res://scripts/Jupiter/jupiter_spin.gd" id="2_wkbcp"]
@@ -7,6 +7,9 @@
 [ext_resource type="Script" uid="uid://c4ri5ni20rfnf" path="res://scripts/FreeFlyCamera.gd" id="4_wkbcp"]
 [ext_resource type="PackedScene" uid="uid://bnnmoefwetrvb" path="res://textures/Europa_1_3138.glb" id="5_fhdq0"]
 [ext_resource type="Script" uid="uid://dv48snx223nk6" path="res://scripts/Jupiter/europa_spin.gd" id="5_ietlo"]
+[ext_resource type="Script" uid="uid://chg6oaqpe42a0" path="res://scripts/Jupiter/callisto_orbit.gd" id="7_37e26"]
+[ext_resource type="PackedScene" uid="uid://gyrhox6njldw" path="res://textures/Callisto_1_4821.glb" id="7_gonsf"]
+[ext_resource type="Script" uid="uid://d2eilhpyjphxm" path="res://scripts/Jupiter/callisto_spin.gd" id="8_wjeiw"]
 
 [node name="Jupiter" type="Node3D"]
 
@@ -28,7 +31,19 @@ distance_scale = 10.0
 [node name="EuropaSpin" type="Node3D" parent="EuropaOrbit"]
 script = ExtResource("5_ietlo")
 
-[node name="Europa_1_3138" parent="EuropaOrbit/EuropaSpin" instance=ExtResource("5_fhdq0")]
+[node name="Mesh" parent="EuropaOrbit/EuropaSpin" instance=ExtResource("5_fhdq0")]
+transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0, 0, 0)
+
+[node name="CallistoOrbit" type="Node3D" parent="."]
+transform = Transform3D(0.034, 0, 0, 0, 0.034, 0, 0, 0, 0.034, 0, 0, 3.6)
+script = ExtResource("7_37e26")
+AU_UNITS = 150.0
+distance_scale = 10.0
+
+[node name="CallistoSpin" type="Node3D" parent="CallistoOrbit"]
+script = ExtResource("8_wjeiw")
+
+[node name="Mesh" parent="CallistoOrbit/CallistoSpin" instance=ExtResource("7_gonsf")]
 transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0, 0, 0)
 
 [node name="CameraRig" type="Node3D" parent="."]
@@ -40,3 +55,4 @@ script = ExtResource("4_wkbcp")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+visible = false
