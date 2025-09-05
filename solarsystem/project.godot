@@ -11,8 +11,13 @@ config_version=5
 [application]
 
 config/name="SolarSystem"
-run/main_scene="uid://8wjcwtj34nwp"
+run/main_scene="res://scenes/Inner_Solar_System.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
+boot_splash/bg_color=Color(0.210938, 0.210938, 0.210938, 1)
+
+[autoload]
+
+SimGlobals="*res://scripts/sim_globals.gd"
 
 [filesystem]
 
@@ -21,3 +26,4 @@ import/blender/enabled=false
 [global_group]
 
 cams=""
+clock=""
