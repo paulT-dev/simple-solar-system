@@ -1,14 +1,28 @@
-[gd_scene load_steps=4 format=3 uid="uid://bxjht2au2656f"]
+[gd_scene load_steps=5 format=3 uid="uid://bxjht2au2656f"]
 
 [ext_resource type="PackedScene" uid="uid://b2ou4llr483sf" path="res://textures/Saturn_1_120536.glb" id="1_0hv4o"]
-[ext_resource type="Script" uid="uid://5jt11mx4f0pt" path="res://scripts/saturn_orbit.gd" id="1_atjfo"]
-[ext_resource type="Script" uid="uid://fe24d6ewxbi7" path="res://scripts/saturn_spin.gd" id="2_o4pxn"]
+[ext_resource type="Script" uid="uid://r1hl2k0skeqj" path="res://scripts/Saturn/orbit_trail_saturn.gd" id="1_atjfo"]
+[ext_resource type="Script" uid="uid://n8uc0fmbfvvd" path="res://scripts/Saturn/saturn_spin.gd" id="2_o4pxn"]
+[ext_resource type="Script" uid="uid://c4ri5ni20rfnf" path="res://scripts/FreeFlyCamera.gd" id="4_o4pxn"]
 
 [node name="Saturn" type="Node3D"]
+
+[node name="OrbitTrail_Saturn" type="Node3D" parent="."]
 script = ExtResource("1_atjfo")
 
-[node name="Rotation" type="Node3D" parent="."]
+[node name="SaturnSpin" type="Node3D" parent="OrbitTrail_Saturn"]
 script = ExtResource("2_o4pxn")
 
-[node name="Saturn_1_120536" parent="Rotation" instance=ExtResource("1_0hv4o")]
+[node name="Saturn_1_120536" parent="OrbitTrail_Saturn/SaturnSpin" instance=ExtResource("1_0hv4o")]
 transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0, 0, 0)
+
+[node name="CameraRig" type="Node3D" parent="."]
+script = ExtResource("4_o4pxn")
+
+[node name="Pivot" type="Node3D" parent="CameraRig"]
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig/Pivot" groups=["cams"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+visible = false

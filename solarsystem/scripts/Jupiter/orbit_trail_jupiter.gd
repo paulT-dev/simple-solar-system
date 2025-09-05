@@ -7,7 +7,7 @@ extends Node3D
 # Winkel-Setup
 @export var center: Vector3 = Vector3.ZERO	# Bezugspunkt (Sonne)
 @export var axis: Vector3 = Vector3.UP		# Rotationsachse (Y-Achse)
-@export var degree_step: float = 1.0		# 1 Marker je X Grad
+@export var degree_step: float = 0.1		# 1 Marker je X Grad
 
 # Marker-Erscheinung
 @export var use_global_marker_radius: bool = true
