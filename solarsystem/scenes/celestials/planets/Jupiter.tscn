@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dby6gyivdw0j7"]
+[gd_scene load_steps=14 format=3 uid="uid://dby6gyivdw0j7"]
 
 [ext_resource type="Script" uid="uid://7rskyw7s2trd" path="res://scripts/Jupiter/orbit_trail_jupiter.gd" id="1_weauq"]
 [ext_resource type="Script" uid="uid://b5200mvqyyjni" path="res://scripts/Jupiter/jupiter_spin.gd" id="2_wkbcp"]
@@ -10,6 +10,9 @@
 [ext_resource type="Script" uid="uid://chg6oaqpe42a0" path="res://scripts/Jupiter/callisto_orbit.gd" id="7_37e26"]
 [ext_resource type="PackedScene" uid="uid://gyrhox6njldw" path="res://textures/Callisto_1_4821.glb" id="7_gonsf"]
 [ext_resource type="Script" uid="uid://d2eilhpyjphxm" path="res://scripts/Jupiter/callisto_spin.gd" id="8_wjeiw"]
+[ext_resource type="Script" uid="uid://dkklk86ymoemm" path="res://scripts/Jupiter/ganymede_orbit.gd" id="10_0fhah"]
+[ext_resource type="Script" uid="uid://billltcej4ct2" path="res://scripts/Jupiter/ganymede_spin.gd" id="11_4rcvs"]
+[ext_resource type="PackedScene" uid="uid://c2qsofvktdei6" path="res://textures/Ganymede_1_5268.glb" id="12_rapet"]
 
 [node name="Jupiter" type="Node3D"]
 
@@ -44,6 +47,18 @@ distance_scale = 10.0
 script = ExtResource("8_wjeiw")
 
 [node name="Mesh" parent="CallistoOrbit/CallistoSpin" instance=ExtResource("7_gonsf")]
+transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0, 0, 0)
+
+[node name="GanymedeOrbit" type="Node3D" parent="."]
+transform = Transform3D(0.037, 0, 0, 0, 0.037, 0, 0, 0, 0.037, 0, 0, 2)
+script = ExtResource("10_0fhah")
+AU_UNITS = 150.0
+distance_scale = 10.0
+
+[node name="GanymedeSpin" type="Node3D" parent="GanymedeOrbit"]
+script = ExtResource("11_4rcvs")
+
+[node name="Mesh" parent="GanymedeOrbit/GanymedeSpin" instance=ExtResource("12_rapet")]
 transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0, 0, 0)
 
 [node name="CameraRig" type="Node3D" parent="."]
