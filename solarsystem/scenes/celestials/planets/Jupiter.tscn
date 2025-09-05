@@ -1,9 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://dby6gyivdw0j7"]
+[gd_scene load_steps=8 format=3 uid="uid://dby6gyivdw0j7"]
 
 [ext_resource type="Script" uid="uid://7rskyw7s2trd" path="res://scripts/Jupiter/orbit_trail_jupiter.gd" id="1_weauq"]
 [ext_resource type="Script" uid="uid://b5200mvqyyjni" path="res://scripts/Jupiter/jupiter_spin.gd" id="2_wkbcp"]
 [ext_resource type="PackedScene" uid="uid://3sxsx7d8h008" path="res://textures/Jupiter_1_142984.glb" id="3_fhdq0"]
+[ext_resource type="Script" uid="uid://dlarcbgk5j7qg" path="res://scripts/Jupiter/europa_orbit.gd" id="4_eqvdv"]
 [ext_resource type="Script" uid="uid://c4ri5ni20rfnf" path="res://scripts/FreeFlyCamera.gd" id="4_wkbcp"]
+[ext_resource type="PackedScene" uid="uid://bnnmoefwetrvb" path="res://textures/Europa_1_3138.glb" id="5_fhdq0"]
+[ext_resource type="Script" uid="uid://dv48snx223nk6" path="res://scripts/Jupiter/europa_spin.gd" id="5_ietlo"]
 
 [node name="Jupiter" type="Node3D"]
 
@@ -16,13 +19,24 @@ script = ExtResource("2_wkbcp")
 [node name="Mesh" parent="OrbitTrail_Jupiter/JupiterSpin" instance=ExtResource("3_fhdq0")]
 transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0, 0, 0)
 
+[node name="EuropaOrbit" type="Node3D" parent="."]
+transform = Transform3D(0.02, 0, 0, 0, 0.02, 0, 0, 0, 0.02, 0, 0, 0.84)
+script = ExtResource("4_eqvdv")
+AU_UNITS = 150.0
+distance_scale = 10.0
+
+[node name="EuropaSpin" type="Node3D" parent="EuropaOrbit"]
+script = ExtResource("5_ietlo")
+
+[node name="Europa_1_3138" parent="EuropaOrbit/EuropaSpin" instance=ExtResource("5_fhdq0")]
+transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0, 0, 0)
+
 [node name="CameraRig" type="Node3D" parent="."]
 script = ExtResource("4_wkbcp")
 
 [node name="Pivot" type="Node3D" parent="CameraRig"]
 
 [node name="Camera3D" type="Camera3D" parent="CameraRig/Pivot" groups=["cams"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-visible = false

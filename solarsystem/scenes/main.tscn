@@ -30,7 +30,6 @@ albedo_texture = ExtResource("2_dp3eg")
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_muem4")
-seconds_per_day = 0.1
 trail_size = 0.5
 
 [node name="Sky" type="MeshInstance3D" parent="."]
