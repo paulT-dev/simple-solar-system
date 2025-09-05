@@ -1,7 +1,7 @@
 # MercuryKeplerOrbit.gd
 extends Node3D
 
-@export var AU_UNITS: float = 30.0			# 1 AU = 30 Units
+@export var AU_UNITS: float = 150.0			# 1 AU = 30 Units
 @export var a_au: float = 0.38709893		# große Halbachse (AU)
 @export var e: float = 0.205630			# Exzentrizität
 @export var i_deg: float = 7.005			# Inklination (°)

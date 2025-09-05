@@ -10,7 +10,7 @@ extends Node3D
 @export var degree_step: float = 1.0		# 1 Marker je X Grad
 
 # Marker-Erscheinung
-@export var marker_radius: float = 0.05
+@export var marker_radius: float = 0.5
 @export var marker_color: Color = Color(1,1,1,0.6)
 @export var unshaded: bool = true
 

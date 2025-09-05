@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="SolarSystem"
-run/main_scene="uid://cmda6cqly7evw"
+run/main_scene="uid://8wjcwtj34nwp"
 config/features=PackedStringArray("4.4", "Forward Plus")
 
 [filesystem]
