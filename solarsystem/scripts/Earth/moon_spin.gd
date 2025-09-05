@@ -2,7 +2,7 @@
 extends Node3D
 
 @export var center_body: NodePath			# optional: Erde hier zuweisen
-@export var seconds_per_turn: float = 27.3217
+@export var days_per_turn: float = 27.3217
 @export var axial_tilt_deg: float = 6.68
 @export var tidal_lock: bool = true
 @export var axis: Vector3 = Vector3.UP
@@ -25,9 +25,9 @@ func _process(delta: float) -> void:
 		return
 
 	# freie Rotation (falls tidal_lock=false)
-	if seconds_per_turn <= 0.0:
+	if days_per_turn <= 0.0:
 		return
-	var rad := TAU * (delta / seconds_per_turn)
+	var rad := TAU * (delta / (days_per_turn * SimGlobals.seconds_per_day))
 	if use_local_axis:
 		rotate_object_local(axis.normalized(), rad)
 	else:

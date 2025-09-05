@@ -13,7 +13,6 @@ extends Node3D
 @export var omega_deg: float = 318.15			# Argument des Perigäums
 
 @export var days_per_orbit: float = 27.3217		# siderischer Monat (Tage)
-@export var seconds_per_day: float = 1.0		# deine Zeitbasis
 @export var mean_anomaly_deg_at_t0: float = 0.0	# Startphase (M0)
 
 var _t_days := 0.0
@@ -26,7 +25,7 @@ func _ready() -> void:
 		_center = get_parent() as Node3D	# Standard: Parent ist Erde
 
 func _process(delta: float) -> void:
-	_t_days += delta * seconds_per_day
+	_t_days += delta / SimGlobals.seconds_per_day
 
 	# Mittlere Anomalie
 	var M := TAU * (_t_days / days_per_orbit) + deg_to_rad(mean_anomaly_deg_at_t0)
