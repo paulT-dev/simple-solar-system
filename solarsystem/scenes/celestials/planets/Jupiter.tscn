@@ -1,9 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://dby6gyivdw0j7"]
+[gd_scene load_steps=17 format=3 uid="uid://dby6gyivdw0j7"]
 
 [ext_resource type="Script" uid="uid://7rskyw7s2trd" path="res://scripts/Jupiter/orbit_trail_jupiter.gd" id="1_weauq"]
 [ext_resource type="Script" uid="uid://b5200mvqyyjni" path="res://scripts/Jupiter/jupiter_spin.gd" id="2_wkbcp"]
 [ext_resource type="PackedScene" uid="uid://3sxsx7d8h008" path="res://textures/Jupiter_1_142984.glb" id="3_fhdq0"]
+[ext_resource type="Script" uid="uid://dlarcbgk5j7qg" path="res://scripts/Jupiter/europa_orbit.gd" id="4_eqvdv"]
 [ext_resource type="Script" uid="uid://c4ri5ni20rfnf" path="res://scripts/FreeFlyCamera.gd" id="4_wkbcp"]
+[ext_resource type="PackedScene" uid="uid://bnnmoefwetrvb" path="res://textures/Europa_1_3138.glb" id="5_fhdq0"]
+[ext_resource type="Script" uid="uid://dv48snx223nk6" path="res://scripts/Jupiter/europa_spin.gd" id="5_ietlo"]
+[ext_resource type="Script" uid="uid://chg6oaqpe42a0" path="res://scripts/Jupiter/callisto_orbit.gd" id="7_37e26"]
+[ext_resource type="PackedScene" uid="uid://gyrhox6njldw" path="res://textures/Callisto_1_4821.glb" id="7_gonsf"]
+[ext_resource type="Script" uid="uid://d2eilhpyjphxm" path="res://scripts/Jupiter/callisto_spin.gd" id="8_wjeiw"]
+[ext_resource type="Script" uid="uid://dkklk86ymoemm" path="res://scripts/Jupiter/ganymede_orbit.gd" id="10_0fhah"]
+[ext_resource type="Script" uid="uid://billltcej4ct2" path="res://scripts/Jupiter/ganymede_spin.gd" id="11_4rcvs"]
+[ext_resource type="PackedScene" uid="uid://c2qsofvktdei6" path="res://textures/Ganymede_1_5268.glb" id="12_rapet"]
+[ext_resource type="Script" uid="uid://udijx3tjqaf4" path="res://scripts/Jupiter/io_orbit.gd" id="13_e36i6"]
+[ext_resource type="Script" uid="uid://c1kwbflldtnc7" path="res://scripts/Jupiter/io_spin.gd" id="14_agmkd"]
+[ext_resource type="PackedScene" uid="uid://bc4vnqevfpav7" path="res://textures/Io_1_3643.glb" id="15_rn3cw"]
 
 [node name="Jupiter" type="Node3D"]
 
@@ -16,13 +28,61 @@ script = ExtResource("2_wkbcp")
 [node name="Mesh" parent="OrbitTrail_Jupiter/JupiterSpin" instance=ExtResource("3_fhdq0")]
 transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0, 0, 0)
 
+[node name="EuropaOrbit" type="Node3D" parent="."]
+transform = Transform3D(0.02, 0, 0, 0, 0.02, 0, 0, 0, 0.02, 0, 0, 0.84)
+script = ExtResource("4_eqvdv")
+AU_UNITS = 150.0
+distance_scale = 15.0
+
+[node name="EuropaSpin" type="Node3D" parent="EuropaOrbit"]
+script = ExtResource("5_ietlo")
+
+[node name="Mesh" parent="EuropaOrbit/EuropaSpin" instance=ExtResource("5_fhdq0")]
+transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0, 0, 0)
+
+[node name="CallistoOrbit" type="Node3D" parent="."]
+transform = Transform3D(0.034, 0, 0, 0, 0.034, 0, 0, 0, 0.034, 0, 0, 3.6)
+script = ExtResource("7_37e26")
+AU_UNITS = 150.0
+distance_scale = 15.0
+
+[node name="CallistoSpin" type="Node3D" parent="CallistoOrbit"]
+script = ExtResource("8_wjeiw")
+
+[node name="Mesh" parent="CallistoOrbit/CallistoSpin" instance=ExtResource("7_gonsf")]
+transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0, 0, 0)
+
+[node name="GanymedeOrbit" type="Node3D" parent="."]
+transform = Transform3D(0.037, 0, 0, 0, 0.037, 0, 0, 0, 0.037, 0, 0, 2)
+script = ExtResource("10_0fhah")
+AU_UNITS = 150.0
+distance_scale = 15.0
+
+[node name="GanymedeSpin" type="Node3D" parent="GanymedeOrbit"]
+script = ExtResource("11_4rcvs")
+
+[node name="Mesh" parent="GanymedeOrbit/GanymedeSpin" instance=ExtResource("12_rapet")]
+transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0, 0, 0)
+
+[node name="IoOrbit" type="Node3D" parent="."]
+transform = Transform3D(0.025, 0, 0, 0, 0.025, 0, 0, 0, 0.025, 0, 0, 0.84)
+script = ExtResource("13_e36i6")
+AU_UNITS = 150.0
+distance_scale = 15.0
+
+[node name="IoSpin" type="Node3D" parent="IoOrbit"]
+script = ExtResource("14_agmkd")
+
+[node name="Mesh" parent="IoOrbit/IoSpin" instance=ExtResource("15_rn3cw")]
+transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0, 0, 0)
+
 [node name="CameraRig" type="Node3D" parent="."]
 script = ExtResource("4_wkbcp")
 
 [node name="Pivot" type="Node3D" parent="CameraRig"]
 
 [node name="Camera3D" type="Camera3D" parent="CameraRig/Pivot" groups=["cams"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 visible = false

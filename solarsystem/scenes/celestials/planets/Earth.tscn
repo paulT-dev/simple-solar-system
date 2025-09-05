@@ -32,7 +32,7 @@ script = ExtResource("4_3pnbj")
 script = ExtResource("5_nhu2r")
 
 [node name="Mesh" type="MeshInstance3D" parent="MoonOrbit/MoonSpin"]
-transform = Transform3D(0.273, 0, 0, 0, 0.273, 0, 0, 0, 0.273, 2, 0, 0)
+transform = Transform3D(0.273, 0, 0, 0, 0.273, 0, 0, 0, 0.273, 0, 0, 1.6)
 mesh = SubResource("SphereMesh_w4nfn")
 surface_material_override/0 = SubResource("StandardMaterial3D_6drko")
 
