@@ -1,7 +1,7 @@
 # EarthKeplerOrbit.gd — elliptische Bahn um (0,0,0)
 extends Node3D
 
-@export var AU_UNITS: float = 30.0			# 1 AU = 30 Units
+@export var AU_UNITS: float = 150.0			# 1 AU = 30 Units
 @export var a_au: float = 1.0				# große Halbachse (AU)
 @export var e: float = 0.0167086			# Exzentrizität
 @export var i_deg: float = 0.0				# Inklination (°) ~0 zur Ekliptik
