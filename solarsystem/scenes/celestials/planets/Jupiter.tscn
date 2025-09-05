@@ -73,7 +73,7 @@ distance_scale = 15.0
 [node name="IoSpin" type="Node3D" parent="IoOrbit"]
 script = ExtResource("14_agmkd")
 
-[node name="Io_1_3643" parent="IoOrbit/IoSpin" instance=ExtResource("15_rn3cw")]
+[node name="Mesh" parent="IoOrbit/IoSpin" instance=ExtResource("15_rn3cw")]
 transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0, 0, 0)
 
 [node name="CameraRig" type="Node3D" parent="."]
