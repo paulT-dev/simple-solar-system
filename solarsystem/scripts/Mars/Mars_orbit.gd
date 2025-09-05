@@ -9,13 +9,12 @@ extends Node3D
 @export var omega_deg: float = 286.502		# Argument des Perihels (°)
 
 @export var days_per_orbit: float = 686.98	# siderische Umlaufzeit (Tage)
-@export var seconds_per_day: float = 1.0	# 1 s = 1 Tag
 @export var mean_anomaly_deg_at_t0: float = 0.0	# Startphase (M0 in °)
 
 var t_days := 0.0
 
 func _process(delta: float) -> void:
-	t_days += delta / seconds_per_day
+	t_days += delta / SimGlobals.seconds_per_day
 
 	# Mittlere Anomalie M
 	var M := TAU * (t_days / days_per_orbit) + deg_to_rad(mean_anomaly_deg_at_t0)

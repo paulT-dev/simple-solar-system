@@ -10,7 +10,8 @@ extends Node3D
 @export var degree_step: float = 1.0		# 1 Marker je X Grad
 
 # Marker-Erscheinung
-@export var marker_radius: float = 0.5
+@export var use_global_marker_radius: bool = true
+@export var marker_radius: float = 0.05 : set = _set_marker_radius
 @export var marker_color: Color = Color(1,1,1,0.6)
 @export var unshaded: bool = true
 
@@ -28,6 +29,8 @@ var _v := Vector3.FORWARD
 var _have_last := false
 var _last_angle := 0.0
 var _accum := 0.0
+
+var _last_global_radius := -1.0
 
 func _ready() -> void:
 	# Ziel bestimmen
@@ -49,7 +52,17 @@ func _ready() -> void:
 	# Winkelbasis aus Achse berechnen
 	_rebuild_plane_basis()
 
+	# globalen Radius übernehmen (falls gewünscht)
+	if use_global_marker_radius:
+		_apply_radius(SimGlobals.trail_sphere_size)
+
 func _process(_delta: float) -> void:
+	# Globalen Radius live nachziehen (falls sich SimGlobals ändert)
+	if use_global_marker_radius:
+		var r := SimGlobals.trail_sphere_size
+		if not is_equal_approx(r, _last_global_radius):
+			_apply_radius(r)
+
 	var pos := _target.global_position
 	var ang := _angle_deg(pos)
 
@@ -90,6 +103,8 @@ func _drop_marker(pos: Vector3) -> void:
 	var sphere := SphereMesh.new()
 	sphere.radius = marker_radius
 	sphere.height = marker_radius
+	sphere.radial_segments = 8
+	sphere.rings = 6
 	m.mesh = sphere
 
 	# Material
@@ -103,6 +118,21 @@ func _drop_marker(pos: Vector3) -> void:
 
 	_markers_root.add_child(m)
 	m.global_position = pos
+
+# ---- Setters / Helpers ----
+
+func _set_marker_radius(v: float) -> void:
+	marker_radius = max(0.001, v)
+	# vorhandene Marker aktualisieren
+	if _markers_root:
+		for c in _markers_root.get_children():
+			if c is MeshInstance3D and c.mesh is SphereMesh:
+				var s := c.mesh as SphereMesh
+				s.radius = marker_radius
+
+func _apply_radius(r: float) -> void:
+	_last_global_radius = max(0.001, r)
+	_set_marker_radius(_last_global_radius)
 
 # ---- Hilfsfunktionen ----
 
