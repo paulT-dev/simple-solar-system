@@ -2,9 +2,9 @@
 extends Node3D
 
 @export var follow_target: NodePath
-@export var center: Vector3 = Vector3.ZERO      # bleibt erhalten (nicht benötigt)
-@export var axis: Vector3 = Vector3.UP          # bleibt erhalten (nicht benötigt)
-@export var interval_sec: float = 0.1           # NEU: statt degree_step
+@export var center: Vector3 = Vector3.ZERO
+@export var axis: Vector3 = Vector3.UP
+@export var interval_sec: float = 0.1
 
 @export var use_global_marker_radius := true
 @export var marker_radius := 0.05 : set = _set_marker_radius
@@ -19,16 +19,24 @@ var _mmi: MultiMeshInstance3D
 var _mm: MultiMesh
 var _mat: StandardMaterial3D
 
-var _u := Vector3.RIGHT     # bleibt erhalten (nicht benötigt)
-var _v := Vector3.FORWARD   # bleibt erhalten (nicht benötigt)
+var _u := Vector3.RIGHT
+var _v := Vector3.FORWARD
 var _have_started := false
 var _accum := 0.0
 
 var _write_idx := 0
 var _count := 0
 var _last_global_radius := -1.0
+var _disabled := false   # NEU: wenn Größe 0 → gar nicht starten
 
 func _ready() -> void:
+	# --- Früh-Exit: nichts rendern, wenn globale Größe 0 ist ---
+	if use_global_marker_radius:
+		if SimGlobals.trail_moon_size <= 0.0:
+			_disabled = true
+			set_process(false)
+			return
+
 	# Ziel
 	if follow_target != NodePath():
 		_target = get_node_or_null(follow_target) as Node3D
@@ -47,7 +55,7 @@ func _ready() -> void:
 	var sphere := SphereMesh.new()
 	sphere.radial_segments = 8
 	sphere.rings = 6
-	sphere.radius = 1.0 # wir skalieren per Transform
+	sphere.radius = 1.0
 	_mat = StandardMaterial3D.new()
 	_mat.albedo_color = Color(1,1,1,alpha)
 	if unshaded:
@@ -65,19 +73,26 @@ func _ready() -> void:
 		_mmi.global_transform = Transform3D.IDENTITY
 	add_child(_mmi)
 
-	# (Basis-Funktionen bleiben erhalten, werden hier nicht benötigt)
+	# (Basis-Funktionen bleiben erhalten)
 	_rebuild_plane_basis()
 	if use_global_marker_radius:
-		_apply_radius(SimGlobals.trail_sphere_size)
+		_apply_radius(SimGlobals.trail_moon_size)
 
-	# Instanzen neutral setzen (am Ursprung „unsichtbar klein“)
+	# Instanzen neutral setzen
 	var id_t := Transform3D(Basis.IDENTITY.scaled(Vector3(0.0001,0.0001,0.0001)), Vector3.ZERO)
 	for i in _mm.instance_count:
 		_mm.set_instance_transform(i, id_t)
 
 func _process(delta: float) -> void:
+	# Laufzeit-Guard (falls sich der Wert später auf 0 setzt)
+	if _disabled:
+		return
 	if use_global_marker_radius:
-		var r := SimGlobals.trail_sphere_size
+		var r := SimGlobals.trail_moon_size
+		if r <= 0.0:
+			_disabled = true
+			set_process(false)
+			return
 		if not is_equal_approx(r, _last_global_radius):
 			_apply_radius(r)
 
@@ -89,7 +104,6 @@ func _process(delta: float) -> void:
 		_drop_marker(pos)
 		return
 
-	# --- ZEITBASIERT ---
 	_accum += delta
 	while _accum >= interval_sec:
 		_accum -= interval_sec
@@ -105,7 +119,6 @@ func _drop_marker(pos: Vector3) -> void:
 
 func _set_marker_radius(v: float) -> void:
 	marker_radius = max(0.001, v)
-	# existierende Marker neu skalieren (Position beibehalten)
 	for i in _count:
 		var t := _mm.get_instance_transform(i)
 		var p := t.origin
@@ -116,7 +129,6 @@ func _apply_radius(r: float) -> void:
 	_last_global_radius = max(0.001, r)
 	_set_marker_radius(_last_global_radius)
 
-# bleiben der Vollständigkeit halber drin (aktuell ungenutzt)
 func _rebuild_plane_basis() -> void:
 	var n := axis.normalized()
 	var ref := Vector3.RIGHT

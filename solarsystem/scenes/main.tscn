@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://c4ri5ni20rfnf" path="res://scripts/FreeFlyCamera.gd" id="1_choun"]
 [ext_resource type="Script" uid="uid://civms7lwxxyct" path="res://scripts/camera_switcher.gd" id="1_eb6dy"]
-[ext_resource type="Script" uid="uid://cwnsgqj3xtk0g" path="res://scripts/main_config.gd" id="1_muem4"]
 [ext_resource type="PackedScene" uid="uid://d32df7pdlwjy0" path="res://scenes/celestials/sun.tscn" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://qmp5m7bugsm3" path="res://scripts/config.gd" id="1_yc10j"]
 [ext_resource type="PackedScene" uid="uid://dq0j13sw6j6vu" path="res://scenes/celestials/planets/Mercury.tscn" id="2_0wfyh"]
 [ext_resource type="Texture2D" uid="uid://bolaxe645pp2p" path="res://materials/NightSkyHDRI001_16K-HDR.exr" id="2_dp3eg"]
 [ext_resource type="PackedScene" uid="uid://vc3aojivmcj1" path="res://scenes/celestials/planets/Venus.tscn" id="3_sugp2"]
@@ -32,7 +32,8 @@ albedo_texture = ExtResource("2_dp3eg")
 [sub_resource type="Environment" id="Environment_sgp6g"]
 
 [node name="Main" type="Node3D"]
-script = ExtResource("1_muem4")
+script = ExtResource("1_yc10j")
+seconds_per_day = 0.1
 
 [node name="Sky" type="MeshInstance3D" parent="."]
 transform = Transform3D(20000, 0, 0, 0, 20000, 0, 0, 0, 20000, 0, 0, 0)
