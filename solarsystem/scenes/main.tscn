@@ -43,7 +43,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_0ld40")
 
 [node name="Sun" parent="Celestials" instance=ExtResource("1_o5qli")]
 transform = Transform3D(13, 0, 0, 0, 13, 0, 0, 0, 13, 0, 0, 0)
-visible = false
 
 [node name="Mercury_Orbit" type="Node3D" parent="Celestials"]
 script = ExtResource("3_ya4ey")

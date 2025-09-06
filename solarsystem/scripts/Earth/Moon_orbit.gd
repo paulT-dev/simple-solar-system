@@ -47,7 +47,7 @@ func _process(delta: float) -> void:
 
 	# Position relativ zum Erd-Zentrum (Y = up)
 	var x := r_au * (cos(Omega) * cos(u) - sin(Omega) * sin(u) * cos(i))
-	var z := r_au * (sin(Omega) * cos(u) + cos(Omega) * sin(u) * cos(i))
+	var z := -r_au * (sin(Omega) * cos(u) + cos(Omega) * sin(u) * cos(i))
 	var y := r_au * (sin(i) * sin(u))
 
 	var offset := Vector3(x, y, z) * AU_UNITS * distance_scale
