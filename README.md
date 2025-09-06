@@ -1,2 +1,1 @@
 # simple-solar-system
-
