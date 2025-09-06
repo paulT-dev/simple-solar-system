@@ -1,0 +1,38 @@
+[gd_scene load_steps=8 format=3 uid="uid://bk3dkf20bnkwt"]
+
+[ext_resource type="Script" uid="uid://d0fx10vclod3t" path="res://scripts/planet_orbits_config.gd" id="1_kflby"]
+[ext_resource type="Script" uid="uid://civms7lwxxyct" path="res://scripts/camera_switcher.gd" id="2_wr2uq"]
+[ext_resource type="Script" uid="uid://c4ri5ni20rfnf" path="res://scripts/FreeFlyCamera.gd" id="3_s3r7q"]
+[ext_resource type="PackedScene" uid="uid://d32df7pdlwjy0" path="res://scenes/celestials/sun.tscn" id="4_clahu"]
+[ext_resource type="Texture2D" uid="uid://bolaxe645pp2p" path="res://materials/NightSkyHDRI001_16K-HDR.exr" id="5_2j1po"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_r2e4m"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rav3h"]
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0.695313, 0.695313, 0.695313, 1)
+albedo_texture = ExtResource("5_2j1po")
+
+[node name="Planet_Orbits" type="Node3D"]
+script = ExtResource("1_kflby")
+
+[node name="CameraSwitcher" type="Node3D" parent="."]
+transform = Transform3D(1000, 0, 0, 0, 1000, 0, 0, 0, 1000, 0, 0, 0)
+script = ExtResource("2_wr2uq")
+
+[node name="CameraRig" type="Node3D" parent="CameraSwitcher"]
+script = ExtResource("3_s3r7q")
+
+[node name="Pivot" type="Node3D" parent="CameraSwitcher/CameraRig"]
+
+[node name="Camera3D" type="Camera3D" parent="CameraSwitcher/CameraRig/Pivot" groups=["cams"]]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0.1)
+
+[node name="Sun" parent="." instance=ExtResource("4_clahu")]
+transform = Transform3D(109.176, 0, 0, 0, 109.176, 0, 0, 0, 109.176, 0, 0, 0)
+
+[node name="Sky" type="MeshInstance3D" parent="."]
+transform = Transform3D(2000, 0, 0, 0, 2000, 0, 0, 0, 2000, 0, 0, 0)
+mesh = SubResource("SphereMesh_r2e4m")
+surface_material_override/0 = SubResource("StandardMaterial3D_rav3h")
