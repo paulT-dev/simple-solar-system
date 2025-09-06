@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://d1huipfhbrw1t"]
+[gd_scene load_steps=11 format=3 uid="uid://d1huipfhbrw1t"]
 
 [ext_resource type="Script" uid="uid://brqwjo2kwqfqj" path="res://scripts/Earth/earth_spin.gd" id="2_1kkal"]
 [ext_resource type="Texture2D" uid="uid://bjc2yxhjm2ata" path="res://textures/MoonMap2_2500x1250.jpg" id="2_i7iuk"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://caxcqshwhrl28" path="res://scripts/Earth/Moon_orbit.gd" id="4_3pnbj"]
 [ext_resource type="Script" uid="uid://bfvry08o63n3i" path="res://scripts/Earth/orbit_trail_earth.gd" id="4_oeb1d"]
 [ext_resource type="Script" uid="uid://bdho2ow8rkks2" path="res://scripts/Earth/moon_spin.gd" id="5_nhu2r"]
+[ext_resource type="Script" uid="uid://dd2sedwkbbcu1" path="res://scripts/OrbitTrails/OrbitTrails_Moons.gd" id="7_3pnbj"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_w4nfn"]
 
@@ -35,6 +36,8 @@ script = ExtResource("5_nhu2r")
 transform = Transform3D(0.273, 0, 0, 0, 0.273, 0, 0, 0, 0.273, 0, 0, 1.6)
 mesh = SubResource("SphereMesh_w4nfn")
 surface_material_override/0 = SubResource("StandardMaterial3D_6drko")
+script = ExtResource("7_3pnbj")
+follow_target = NodePath(".")
 
 [node name="CameraRig" type="Node3D" parent="."]
 script = ExtResource("3_1kkal")
