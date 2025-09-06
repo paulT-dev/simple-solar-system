@@ -1,63 +1,79 @@
-# OrbitTrail.gd — 1 Marker pro Winkel-Schritt (Standard 1°)
+# OrbitTrailMultiMesh.gd — MultiMesh ohne per-Instance-Farben
 extends Node3D
 
-# Ziel: leer = Parent tracken
 @export var follow_target: NodePath
+@export var center: Vector3 = Vector3.ZERO
+@export var axis: Vector3 = Vector3.UP
+@export var degree_step: float = 1.0
 
-# Winkel-Setup
-@export var center: Vector3 = Vector3.ZERO	# Bezugspunkt (Sonne)
-@export var axis: Vector3 = Vector3.UP		# Rotationsachse (Y-Achse)
-@export var degree_step: float = 1.0		# 1 Marker je X Grad
+@export var use_global_marker_radius := true
+@export var marker_radius := 0.05 : set = _set_marker_radius
+@export var unshaded := true
+@export var alpha := 0.6
 
-# Marker-Erscheinung
-@export var use_global_marker_radius: bool = true
-@export var marker_radius: float = 0.05 : set = _set_marker_radius
-@export var marker_color: Color = Color(1,1,1,0.6)
-@export var unshaded: bool = true
-
-# Sicherheit/Performance
-@export var max_markers: int = 360			# älteste werden entfernt
-@export var top_level_markers: bool = true	# Marker bleiben an Weltkoordinaten
+@export var max_markers := 360
+@export var top_level_markers := true
 
 var _target: Node3D
-var _markers_root: Node3D
-var _counter := 0
+var _mmi: MultiMeshInstance3D
+var _mm: MultiMesh
+var _mat: StandardMaterial3D
 
-# Winkel-Basis (u,v) in der Ebene ⟂ axis
 var _u := Vector3.RIGHT
 var _v := Vector3.FORWARD
 var _have_last := false
 var _last_angle := 0.0
 var _accum := 0.0
 
+var _write_idx := 0
+var _count := 0
 var _last_global_radius := -1.0
 
 func _ready() -> void:
-	# Ziel bestimmen
+	# Ziel
 	if follow_target != NodePath():
 		_target = get_node_or_null(follow_target) as Node3D
 	if _target == null:
-		_target = get_parent() as Node3D
-	if _target == null:
-		_target = self
+		_target = (get_parent() as Node3D) if get_parent() is Node3D else self
 
-	# Container für Marker
-	_markers_root = Node3D.new()
-	_markers_root.name = "Markers"
-	add_child(_markers_root)
+	# MultiMesh
+	_mm = MultiMesh.new()
+	_mm.transform_format = MultiMesh.TRANSFORM_3D
+	_mm.instance_count = max_markers
+
+	# Mesh + Material
+	var sphere := SphereMesh.new()
+	sphere.radial_segments = 8
+	sphere.rings = 6
+	sphere.radius = 1.0 # wir skalieren per Transform
+	_mat = StandardMaterial3D.new()
+	_mat.albedo_color = Color(1,1,1,alpha)
+	if unshaded:
+		_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	_mat.cull_mode = BaseMaterial3D.CULL_DISABLED
+	sphere.material = _mat
+	_mm.mesh = sphere
+
+	# Instance
+	_mmi = MultiMeshInstance3D.new()
+	_mmi.multimesh = _mm
 	if top_level_markers:
-		_markers_root.top_level = true
-		_markers_root.global_transform = Transform3D.IDENTITY
+		_mmi.top_level = true
+		_mmi.global_transform = Transform3D.IDENTITY
+	add_child(_mmi)
 
-	# Winkelbasis aus Achse berechnen
+	# Basis initialisieren
 	_rebuild_plane_basis()
-
-	# globalen Radius übernehmen (falls gewünscht)
 	if use_global_marker_radius:
 		_apply_radius(SimGlobals.trail_sphere_size)
 
-func _process(_delta: float) -> void:
-	# Globalen Radius live nachziehen (falls sich SimGlobals ändert)
+	# Instanzen neutral setzen (am Ursprung „unsichtbar klein“)
+	var id_t := Transform3D(Basis.IDENTITY.scaled(Vector3(0.0001,0.0001,0.0001)), Vector3.ZERO)
+	for i in _mm.instance_count:
+		_mm.set_instance_transform(i, id_t)
+
+func _process(_dt: float) -> void:
 	if use_global_marker_radius:
 		var r := SimGlobals.trail_sphere_size
 		if not is_equal_approx(r, _last_global_radius):
@@ -73,7 +89,6 @@ func _process(_delta: float) -> void:
 		_drop_marker(pos)
 		return
 
-	# signiertes kleinste-Differenz-Winkelmaß (-180..+180)
 	var diff := ang - _last_angle
 	diff = fposmod(diff + 180.0, 360.0) - 180.0
 	_accum += abs(diff)
@@ -84,65 +99,30 @@ func _process(_delta: float) -> void:
 		_drop_marker(pos)
 
 func _drop_marker(pos: Vector3) -> void:
-	# Älteste entfernen, wenn voll
-	if _markers_root.get_child_count() >= max_markers:
-		var oldest := _markers_root.get_child(0)
-		if oldest:
-			oldest.queue_free()
-
-	# Marker erstellen
-	var m := MeshInstance3D.new()
-	m.name = "mk_%d" % _counter
-	_counter += 1
-
-	if top_level_markers:
-		m.top_level = true
-		m.global_transform = Transform3D.IDENTITY
-
-	# Kugel
-	var sphere := SphereMesh.new()
-	sphere.radius = marker_radius
-	sphere.height = marker_radius
-	sphere.radial_segments = 8
-	sphere.rings = 6
-	m.mesh = sphere
-
-	# Material
-	var mat := StandardMaterial3D.new()
-	mat.albedo_color = marker_color
-	if unshaded:
-		mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
-	m.material_override = mat
-
-	_markers_root.add_child(m)
-	m.global_position = pos
-
-# ---- Setters / Helpers ----
+	var basis := Basis.IDENTITY.scaled(Vector3.ONE * marker_radius)
+	var xform := Transform3D(basis, pos)
+	_mm.set_instance_transform(_write_idx, xform)
+	_write_idx = (_write_idx + 1) % max_markers
+	_count = min(_count + 1, max_markers)
 
 func _set_marker_radius(v: float) -> void:
 	marker_radius = max(0.001, v)
-	# vorhandene Marker aktualisieren
-	if _markers_root:
-		for c in _markers_root.get_children():
-			if c is MeshInstance3D and c.mesh is SphereMesh:
-				var s := c.mesh as SphereMesh
-				s.radius = marker_radius
+	# existierende Marker neu skalieren (Position beibehalten)
+	for i in _count:
+		var t := _mm.get_instance_transform(i)
+		var pos := t.origin
+		var basis := Basis.IDENTITY.scaled(Vector3.ONE * marker_radius)
+		_mm.set_instance_transform(i, Transform3D(basis, pos))
 
 func _apply_radius(r: float) -> void:
 	_last_global_radius = max(0.001, r)
 	_set_marker_radius(_last_global_radius)
 
-# ---- Hilfsfunktionen ----
-
 func _rebuild_plane_basis() -> void:
 	var n := axis.normalized()
-	# Referenz wählen, die nicht parallel zur Achse ist
 	var ref := Vector3.RIGHT
 	if abs(n.dot(ref)) > 0.9:
 		ref = Vector3.FORWARD
-	# ref auf Ebene ⟂ n projizieren → u, dann v = n × u
 	_u = (ref - n * ref.dot(n)).normalized()
 	_v = n.cross(_u).normalized()
 
@@ -151,6 +131,4 @@ func _angle_deg(world_pos: Vector3) -> float:
 	var x := v.dot(_u)
 	var y := v.dot(_v)
 	var a := rad_to_deg(atan2(y, x))
-	if a < 0.0:
-		a += 360.0
-	return a
+	return a + 360.0 if a < 0.0 else a
