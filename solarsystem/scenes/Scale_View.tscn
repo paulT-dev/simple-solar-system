@@ -1,0 +1,72 @@
+[gd_scene load_steps=16 format=3 uid="uid://bjsyvp3xabutm"]
+
+[ext_resource type="Script" uid="uid://cf0kxv1oos54j" path="res://scripts/scale_view_config.gd" id="1_keai6"]
+[ext_resource type="Texture2D" uid="uid://bolaxe645pp2p" path="res://materials/NightSkyHDRI001_16K-HDR.exr" id="1_srryq"]
+[ext_resource type="PackedScene" uid="uid://d32df7pdlwjy0" path="res://scenes/celestials/sun.tscn" id="2_ud5i3"]
+[ext_resource type="PackedScene" uid="uid://dq0j13sw6j6vu" path="res://scenes/celestials/planets/Mercury.tscn" id="3_v8g1u"]
+[ext_resource type="PackedScene" uid="uid://dby6gyivdw0j7" path="res://scenes/celestials/planets/Jupiter.tscn" id="4_eqtqf"]
+[ext_resource type="Script" uid="uid://civms7lwxxyct" path="res://scripts/camera_switcher.gd" id="4_pe4rq"]
+[ext_resource type="Script" uid="uid://c4ri5ni20rfnf" path="res://scripts/FreeFlyCamera.gd" id="5_keai6"]
+[ext_resource type="PackedScene" uid="uid://vc3aojivmcj1" path="res://scenes/celestials/planets/Venus.tscn" id="5_srryq"]
+[ext_resource type="PackedScene" uid="uid://d1huipfhbrw1t" path="res://scenes/celestials/planets/Earth.tscn" id="6_ud5i3"]
+[ext_resource type="PackedScene" uid="uid://7ovl70ulw3vx" path="res://scenes/celestials/planets/Mars.tscn" id="7_v8g1u"]
+[ext_resource type="PackedScene" uid="uid://bxjht2au2656f" path="res://scenes/celestials/planets/Saturn.tscn" id="8_rcxnk"]
+[ext_resource type="PackedScene" uid="uid://da8rrje65lpac" path="res://scenes/celestials/planets/Uranus.tscn" id="9_d1he2"]
+[ext_resource type="PackedScene" uid="uid://cfel5bshyvn16" path="res://scenes/celestials/planets/Neptune.tscn" id="10_33dlm"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_rcxnk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d1he2"]
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0.695313, 0.695313, 0.695313, 1)
+albedo_texture = ExtResource("1_srryq")
+
+[node name="ScaleView" type="Node3D"]
+script = ExtResource("1_keai6")
+
+[node name="Sky" type="MeshInstance3D" parent="."]
+transform = Transform3D(2000, 0, 0, 0, 2000, 0, 0, 0, 2000, 0, 0, 0)
+mesh = SubResource("SphereMesh_rcxnk")
+surface_material_override/0 = SubResource("StandardMaterial3D_d1he2")
+
+[node name="Sun" parent="." instance=ExtResource("2_ud5i3")]
+transform = Transform3D(109.176, 0, 0, 0, 109.176, 0, 0, 0, 109.176, 0, 0, 0)
+
+[node name="Planets" type="Node3D" parent="."]
+
+[node name="Mercury" parent="Planets" instance=ExtResource("3_v8g1u")]
+transform = Transform3D(0.383, 0, 0, 0, 0.383, 0, 0, 0, 0.383, 75, 0, 0)
+
+[node name="Venus" parent="Planets" instance=ExtResource("5_srryq")]
+transform = Transform3D(0.949, 0, 0, 0, 0.949, 0, 0, 0, 0.949, 80, 0, 0)
+
+[node name="Earth" parent="Planets" instance=ExtResource("6_ud5i3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 85, 0, 0)
+
+[node name="Mars" parent="Planets" instance=ExtResource("7_v8g1u")]
+transform = Transform3D(0.533, 0, 0, 0, 0.533, 0, 0, 0, 0.533, 90, 0, 0)
+
+[node name="Jupiter" parent="Planets" instance=ExtResource("4_eqtqf")]
+transform = Transform3D(11.21, 0, 0, 0, 11.21, 0, 0, 0, 11.21, 120, 0, 0)
+
+[node name="Saturn" parent="Planets" instance=ExtResource("8_rcxnk")]
+transform = Transform3D(9.45, 0, 0, 0, 9.45, 0, 0, 0, 9.45, 165, 0, 0)
+
+[node name="Uranus" parent="Planets" instance=ExtResource("9_d1he2")]
+transform = Transform3D(4.01, 0, 0, 0, 4.01, 0, 0, 0, 4.01, 185, 0, 0)
+
+[node name="Neptune" parent="Planets" instance=ExtResource("10_33dlm")]
+transform = Transform3D(3.88, 0, 0, 0, 3.88, 0, 0, 0, 3.88, 200, 0, 0)
+
+[node name="CameraSwitcher" type="Node3D" parent="."]
+transform = Transform3D(1000, 0, 0, 0, 1000, 0, 0, 0, 1000, 0, 0, 0)
+script = ExtResource("4_pe4rq")
+
+[node name="CameraRig" type="Node3D" parent="CameraSwitcher"]
+script = ExtResource("5_keai6")
+
+[node name="Pivot" type="Node3D" parent="CameraSwitcher/CameraRig"]
+
+[node name="Camera3D" type="Camera3D" parent="CameraSwitcher/CameraRig/Pivot" groups=["cams"]]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0.1)
