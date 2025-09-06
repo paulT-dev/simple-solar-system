@@ -33,8 +33,8 @@ albedo_texture = ExtResource("2_dp3eg")
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_muem4")
-seconds_per_day = 0.1
-trail_size = 5.0
+seconds_per_day = 0.001
+trail_size = 10.0
 
 [node name="Sky" type="MeshInstance3D" parent="."]
 transform = Transform3D(20000, 0, 0, 0, 20000, 0, 0, 0, 20000, 0, 0, 0)
@@ -81,14 +81,14 @@ script = ExtResource("14_0ld40")
 AU_UNITS = 150.0
 
 [node name="Saturn" parent="Celestials/Saturn_Orbit" instance=ExtResource("7_tipki")]
-transform = Transform3D(9.44, 0, 0, 0, 9.44, 0, 0, 0, 9.44, 0, 0, 287)
+transform = Transform3D(9.44, 0, 0, 0, 9.44, 0, 0, 0, 9.44, 0, 0, 0)
 
 [node name="Uranus_Orbit" type="Node3D" parent="Celestials"]
 script = ExtResource("16_gqmmt")
 AU_UNITS = 150.0
 
 [node name="Uranus" parent="Celestials/Uranus_Orbit" instance=ExtResource("8_85g3d")]
-transform = Transform3D(4.01, 0, 0, 0, 4.01, 0, 0, 0, 4.01, 0, 0, 576)
+transform = Transform3D(4.01, 0, 0, 0, 4.01, 0, 0, 0, 4.01, 0, 0, 0)
 
 [node name="Neptune_Orbit" type="Node3D" parent="Celestials"]
 script = ExtResource("18_gqmmt")
@@ -105,6 +105,7 @@ script = ExtResource("1_eb6dy")
 
 [node name="CameraRig" type="Node3D" parent="CameraSwitcher"]
 script = ExtResource("1_choun")
+move_speed = 100.0
 
 [node name="Pivot" type="Node3D" parent="CameraSwitcher/CameraRig"]
 

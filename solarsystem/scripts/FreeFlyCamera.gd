@@ -1,11 +1,11 @@
 # FreeFlyCamera.gd (mit Zoom)
 extends Node3D
 
-@export var move_speed: float = 30.0
+@export var move_speed: float = 0.1
 @export var min_speed: float = 0.1
 @export var max_speed: float = 10000.0
 @export var mouse_sense: float = 0.0025
-@export var boost_mult: float = 4.0
+@export var boost_mult: float = 10.0
 @export var slow_mult: float = 0.25
 @export var invert_y: bool = false
 @export var pitch_limit_deg: float = 89.0
