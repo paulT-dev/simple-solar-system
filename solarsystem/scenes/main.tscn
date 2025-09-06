@@ -33,8 +33,6 @@ albedo_texture = ExtResource("2_dp3eg")
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_muem4")
-seconds_per_day = 0.001
-trail_size = 10.0
 
 [node name="Sky" type="MeshInstance3D" parent="."]
 transform = Transform3D(20000, 0, 0, 0, 20000, 0, 0, 0, 20000, 0, 0, 0)
@@ -45,6 +43,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_0ld40")
 
 [node name="Sun" parent="Celestials" instance=ExtResource("1_o5qli")]
 transform = Transform3D(13, 0, 0, 0, 13, 0, 0, 0, 13, 0, 0, 0)
+visible = false
 
 [node name="Mercury_Orbit" type="Node3D" parent="Celestials"]
 script = ExtResource("3_ya4ey")

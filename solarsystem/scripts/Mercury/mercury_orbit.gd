@@ -36,7 +36,7 @@ func _process(delta: float) -> void:
 
 	# Position (Y = up in Godot)
 	var x := r_au * (cos(Omega) * cos(u) - sin(Omega) * sin(u) * cos(i))
-	var z := r_au * (sin(Omega) * cos(u) + cos(Omega) * sin(u) * cos(i))
+	var z := -r_au * (sin(Omega) * cos(u) + cos(Omega) * sin(u) * cos(i))
 	var y := r_au * (sin(i) * sin(u))
 
 	global_position = Vector3(x * AU_UNITS, y * AU_UNITS, z * AU_UNITS)

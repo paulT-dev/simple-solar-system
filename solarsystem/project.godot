@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="SolarSystem"
-run/main_scene="uid://bk3dkf20bnkwt"
+run/main_scene="uid://cmda6cqly7evw"
 config/features=PackedStringArray("4.4", "Forward Plus")
 boot_splash/bg_color=Color(0.210938, 0.210938, 0.210938, 1)
 
