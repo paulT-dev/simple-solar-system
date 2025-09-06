@@ -1,0 +1,109 @@
+[gd_scene load_steps=24 format=3 uid="uid://bk3dkf20bnkwt"]
+
+[ext_resource type="Script" path="res://scripts/planet_orbits_config.gd" id="1_kflby"]
+[ext_resource type="Script" uid="uid://civms7lwxxyct" path="res://scripts/camera_switcher.gd" id="2_wr2uq"]
+[ext_resource type="Script" uid="uid://c4ri5ni20rfnf" path="res://scripts/FreeFlyCamera.gd" id="3_s3r7q"]
+[ext_resource type="PackedScene" uid="uid://d32df7pdlwjy0" path="res://scenes/celestials/sun.tscn" id="4_clahu"]
+[ext_resource type="Texture2D" uid="uid://bolaxe645pp2p" path="res://materials/NightSkyHDRI001_16K-HDR.exr" id="5_2j1po"]
+[ext_resource type="Script" uid="uid://cxeu6qf6j08pp" path="res://scripts/Mercury/mercury_orbit.gd" id="6_s3r7q"]
+[ext_resource type="PackedScene" uid="uid://dq0j13sw6j6vu" path="res://scenes/celestials/planets/Mercury.tscn" id="7_clahu"]
+[ext_resource type="Script" uid="uid://f3je1wha30q3" path="res://scripts/Venus/Venus_orbit.gd" id="8_o6400"]
+[ext_resource type="Script" uid="uid://c208m3k6swu2a" path="res://scripts/neptune/neptune_orbit.gd" id="9_1y54u"]
+[ext_resource type="PackedScene" uid="uid://vc3aojivmcj1" path="res://scenes/celestials/planets/Venus.tscn" id="9_c2353"]
+[ext_resource type="Script" uid="uid://bamicve1quc4b" path="res://scripts/Uranus/uranus_orbit.gd" id="9_es2o8"]
+[ext_resource type="Script" uid="uid://d07umxvyq1kkj" path="res://scripts/Saturn/saturn_orbit.gd" id="9_o6400"]
+[ext_resource type="Script" uid="uid://msdhu4v3128h" path="res://scripts/Earth/Earth_orbit.gd" id="10_e7er1"]
+[ext_resource type="PackedScene" uid="uid://d1huipfhbrw1t" path="res://scenes/celestials/planets/Earth.tscn" id="11_fdark"]
+[ext_resource type="Script" uid="uid://bdas78x2x21v5" path="res://scripts/Mars/Mars_orbit.gd" id="12_eg82a"]
+[ext_resource type="PackedScene" uid="uid://7ovl70ulw3vx" path="res://scenes/celestials/planets/Mars.tscn" id="13_powup"]
+[ext_resource type="PackedScene" uid="uid://bxjht2au2656f" path="res://scenes/celestials/planets/Saturn.tscn" id="17_vkkdx"]
+[ext_resource type="PackedScene" uid="uid://da8rrje65lpac" path="res://scenes/celestials/planets/Uranus.tscn" id="19_rs0je"]
+[ext_resource type="PackedScene" uid="uid://cfel5bshyvn16" path="res://scenes/celestials/planets/Neptune.tscn" id="21_62yyo"]
+[ext_resource type="Script" uid="uid://dpvnkhe5x54n6" path="res://scripts/Jupiter/Jupiter_orbit.gd" id="22_e7er1"]
+[ext_resource type="PackedScene" uid="uid://dby6gyivdw0j7" path="res://scenes/celestials/planets/Jupiter.tscn" id="23_fdark"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_r2e4m"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rav3h"]
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0.695313, 0.695313, 0.695313, 1)
+albedo_texture = ExtResource("5_2j1po")
+
+[node name="Planet_Orbits" type="Node3D"]
+script = ExtResource("1_kflby")
+seconds_per_day = 0.001
+trail_size = 2.0
+
+[node name="CameraSwitcher" type="Node3D" parent="."]
+transform = Transform3D(1000, 0, 0, 0, 1000, 0, 0, 0, 1000, 0, 0, 0)
+script = ExtResource("2_wr2uq")
+
+[node name="CameraRig" type="Node3D" parent="CameraSwitcher"]
+script = ExtResource("3_s3r7q")
+
+[node name="Pivot" type="Node3D" parent="CameraSwitcher/CameraRig"]
+
+[node name="Camera3D" type="Camera3D" parent="CameraSwitcher/CameraRig/Pivot" groups=["cams"]]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1, 0)
+
+[node name="Sun" parent="." instance=ExtResource("4_clahu")]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+
+[node name="Sky" type="MeshInstance3D" parent="."]
+transform = Transform3D(4000, 0, 0, 0, 4000, 0, 0, 0, 4000, 0, 0, 0)
+mesh = SubResource("SphereMesh_r2e4m")
+surface_material_override/0 = SubResource("StandardMaterial3D_rav3h")
+
+[node name="Orbits" type="Node3D" parent="."]
+
+[node name="Mercury_Orbit" type="Node3D" parent="Orbits"]
+script = ExtResource("6_s3r7q")
+AU_UNITS = 30.0
+
+[node name="Mercury" parent="Orbits/Mercury_Orbit" instance=ExtResource("7_clahu")]
+transform = Transform3D(0.383, 0, 0, 0, 0.383, 0, 0, 0, 0.383, 0, 0, 0)
+
+[node name="Venus_Orbit" type="Node3D" parent="Orbits"]
+script = ExtResource("8_o6400")
+AU_UNITS = 30.0
+
+[node name="Venus" parent="Orbits/Venus_Orbit" instance=ExtResource("9_c2353")]
+transform = Transform3D(0.94, 0, 0, 0, 0.94, 0, 0, 0, 0.94, 0, 0, 0)
+
+[node name="Earth_Orbit" type="Node3D" parent="Orbits"]
+script = ExtResource("10_e7er1")
+AU_UNITS = 30.0
+
+[node name="Earth" parent="Orbits/Earth_Orbit" instance=ExtResource("11_fdark")]
+
+[node name="Mars_Orbit" type="Node3D" parent="Orbits"]
+script = ExtResource("12_eg82a")
+AU_UNITS = 30.0
+
+[node name="Mars" parent="Orbits/Mars_Orbit" instance=ExtResource("13_powup")]
+transform = Transform3D(0.533, 0, 0, 0, 0.533, 0, 0, 0, 0.533, 0, 0, 0)
+
+[node name="Jupiter_Orbit" type="Node3D" parent="Orbits"]
+script = ExtResource("22_e7er1")
+
+[node name="Jupiter" parent="Orbits/Jupiter_Orbit" instance=ExtResource("23_fdark")]
+transform = Transform3D(11.2, 0, 0, 0, 11.2, 0, 0, 0, 11.2, 0, 0, 0)
+
+[node name="Saturn_Orbit" type="Node3D" parent="Orbits"]
+script = ExtResource("9_o6400")
+
+[node name="Saturn" parent="Orbits/Saturn_Orbit" instance=ExtResource("17_vkkdx")]
+transform = Transform3D(9.44, 0, 0, 0, 9.44, 0, 0, 0, 9.44, 0, 0, 0)
+
+[node name="Uranus_Orbit" type="Node3D" parent="Orbits"]
+script = ExtResource("9_es2o8")
+
+[node name="Uranus" parent="Orbits/Uranus_Orbit" instance=ExtResource("19_rs0je")]
+transform = Transform3D(4.01, 0, 0, 0, 4.01, 0, 0, 0, 4.01, 0, 0, 0)
+
+[node name="Neptune_Orbit" type="Node3D" parent="Orbits"]
+script = ExtResource("9_1y54u")
+
+[node name="Neptune" parent="Orbits/Neptune_Orbit" instance=ExtResource("21_62yyo")]
+transform = Transform3D(3.88, 0, 0, 0, 3.88, 0, 0, 0, 3.88, 0, 0, 0)
