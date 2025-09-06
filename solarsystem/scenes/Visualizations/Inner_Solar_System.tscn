@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://dew3q2j6hr0bf"]
 
 [ext_resource type="PackedScene" uid="uid://d32df7pdlwjy0" path="res://scenes/celestials/sun.tscn" id="1_kjrsm"]
-[ext_resource type="Script" path="res://scripts/inner_solar_system_config.gd" id="1_s5m78"]
+[ext_resource type="Script" uid="uid://dm2uwa5t4dua1" path="res://scripts/inner_solar_system_config.gd" id="1_s5m78"]
 [ext_resource type="Script" uid="uid://civms7lwxxyct" path="res://scripts/camera_switcher.gd" id="2_0nmfu"]
 [ext_resource type="Texture2D" uid="uid://bolaxe645pp2p" path="res://materials/NightSkyHDRI001_16K-HDR.exr" id="2_2t323"]
 [ext_resource type="PackedScene" uid="uid://dq0j13sw6j6vu" path="res://scenes/celestials/planets/Mercury.tscn" id="2_1546o"]
@@ -23,7 +23,7 @@ albedo_texture = ExtResource("2_2t323")
 
 [node name="Inner_SolarSystem" type="Node3D"]
 script = ExtResource("1_s5m78")
-trail_size = 1.0
+trail_size = 0.2
 
 [node name="Sky" type="MeshInstance3D" parent="."]
 transform = Transform3D(1000, 0, 0, 0, 1000, 0, 0, 0, 1000, 0, 0, 0)
@@ -64,6 +64,7 @@ script = ExtResource("2_0nmfu")
 
 [node name="CameraRig" type="Node3D" parent="CameraSwitcher"]
 script = ExtResource("6_3f76q")
+move_speed = 100.0
 
 [node name="Pivot" type="Node3D" parent="CameraSwitcher/CameraRig"]
 
